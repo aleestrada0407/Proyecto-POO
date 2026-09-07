@@ -4,8 +4,7 @@ public class Principal {
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
         boolean inicio = true;
-        boolean ciclo = true;
-        
+
         while (inicio) {
             System.out.println("\n---- BIENVENIDO ----");
             System.out.println("1. Registrar usuario.");
@@ -16,29 +15,73 @@ public class Principal {
             try {
                 opcion = teclado.nextInt();
                 teclado.nextLine();
-                switch(opcion){
+
+                switch (opcion) {
                     case 1:
-                        System.out.println("\nIngrese su tipo de usuario:");
+                        System.out.println("\n---- NUEVO USUARIO ----");
+                        System.out.println("Ingrese su tipo de usuario:");
                         System.out.println("1. Estudiante.");
                         System.out.println("2. Profesor.");
                         int tipousuario = 0;
+
+                        try {
+                            tipousuario = teclado.nextInt();
+                            teclado.nextLine();
+
+                            switch (tipousuario) {
+                                case 1:
+                                    System.out.println("\n---- REGISTRAR ESTUDIANTE ----");
+                                    System.out.println("Ingrese su nombre:");
+                                    String nombre = teclado.nextLine();
+                                    System.out.println("Ingrese su sección:");
+                                    String seccion = teclado.nextLine();
+                                    System.out.println("Ingrese su nombre de usuario:");
+                                    String nombreUsuario = teclado.nextLine();
+                                    System.out.println("Ingrese su contraseña:");
+                                    String contrasena = teclado.nextLine();
+                                    break;
+
+                                case 2:
+                                    System.out.println("\n---- REGISTRAR PROFESOR ----");
+                                    System.out.println("Ingrese su nombre:");
+                                    nombre = teclado.nextLine();
+                                    System.out.println("Ingrese su sección:");
+                                    seccion = teclado.nextLine();
+                                    System.out.println("Ingrese su nombre de usuario:");
+                                    nombreUsuario = teclado.nextLine();
+                                    System.out.println("Ingrese su contraseña:");
+                                    contrasena = teclado.nextLine();
+                                    break;
+
+                                default:
+                                    System.out.println("Entrada no válida. Ingrese 1 o 2.");
+                                    break;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Entrada no válida. Ingrese un número.");
+                            teclado.nextLine();
+                        }
                         break;
+
                     case 2:
-                        System.out.println("\nIngrese su nombre de usuario.");
-                        System.out.println("\nIngrese su contraseña.");
+                        System.out.println("\nIngrese su nombre de usuario:");
+                        String user = teclado.nextLine();
+                        System.out.println("Ingrese su contraseña:");
+                        String pass = teclado.nextLine();
                         break;
+
                     case 3:
                         System.out.println("\nSaliendo. . .");
                         inicio = false;
                         break;
+
                     default:
-                        System.out.println("Entrada no válida. Ingrese un número entre 1 y 4.");
+                        System.out.println("Entrada no válida. Ingrese un número entre 1 y 3.");
                         break;
                 }
-            }
-            catch (Exception e) {
-                    System.out.println("Entrada no válida. Ingrese un número entre 1 y 4.");
-                    teclado.nextLine(); 
+            } catch (Exception e) {
+                System.out.println("Entrada no válida. Debe ingresar un número entero.");
+                teclado.nextLine();
             }
         }
     }
