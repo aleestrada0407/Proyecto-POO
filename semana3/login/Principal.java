@@ -75,5 +75,13 @@ public class Principal {
         interfaz.mostrarTexto("Bienvenido: " + usuario.getNombre());
         interfaz.mostrarTexto("Tipo de usuario: " + usuario.getTipoUsuario());
         interfaz.mostrarTexto("Seccion: " + usuario.getSeccion());
+
+        if (usuario instanceof Estudiante estudiante){
+            menuEstudiante(Estudiante, teclado);
+        }
+        else if (usuario instanceof Profesor profesor){
+            menuProfesor(profesor, teclado);
+        }
     }
+    
 }

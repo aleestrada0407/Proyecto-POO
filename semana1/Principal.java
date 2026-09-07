@@ -1,3 +1,4 @@
+package semana1;
 import java.util.Scanner;
 
 public class Principal {
