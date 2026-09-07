@@ -1,87 +1,176 @@
-package login;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
     private final SistemaLogin sistemaLogin;
-    private final InterfazConsola interfaz;
-
-    public Principal() {
-        sistemaLogin = new SistemaLogin();
-        interfaz = new InterfazConsola();
-    }
+    private final InterfazLogin interfaz;
+    private final GestorResultados gestorResultados;
+    private static List<Usuario> usuarios = new ArrayList<>();
 
     public static void main(String[] args) {
-        new Principal().ejecutar();
-    }
+        Scanner teclado = new Scanner(System.in);
+        boolean inicio = true;
 
-    public void ejecutar() {
-        try (Scanner teclado = new Scanner(System.in)) {
-            boolean continuar = true;
-            while (continuar) {
-                interfaz.mostrarTexto("\n=== SISTEMA DE LOGIN ===");
-                interfaz.mostrarTexto("1. Registrar usuario");
-                interfaz.mostrarTexto("2. Iniciar sesion");
-                interfaz.mostrarTexto("3. Salir");
+        while (inicio) {
+            System.out.println("\n---- BIENVENIDO ----");
+            System.out.println("1. Registrar usuario.");
+            System.out.println("2. Iniciar sesión.");
+            System.out.println("3. Salir.");
+            int opcion = 0;
 
-                int opcion = interfaz.leerOpcion(teclado, 1, 3);
+            try {
+                opcion = teclado.nextInt();
+                teclado.nextLine();
+
                 switch (opcion) {
-                    case 1 -> registrar(teclado);
-                    case 2 -> iniciarSesion(teclado);
-                    case 3 -> continuar = false;
-                    default -> throw new IllegalStateException("Opcion inesperada");
+                    case 1:
+                        System.out.println("\n---- NUEVO USUARIO ----");
+                        System.out.println("Ingrese su tipo de usuario:");
+                        System.out.println("1. Estudiante.");
+                        System.out.println("2. Profesor.");
+                        int tipousuario = 0;
+
+                        try {
+                            tipousuario = teclado.nextInt();
+                            teclado.nextLine();
+
+                            switch (tipousuario) {
+                                case 1:
+                                    System.out.println("\n---- REGISTRAR ESTUDIANTE ----");
+                                    System.out.println("Ingrese su nombre:");
+                                    String nombre = teclado.nextLine();
+                                    System.out.println("Ingrese su sección:");
+                                    String seccion = teclado.nextLine();
+                                    System.out.println("Ingrese su nombre de usuario:");
+                                    String nombreUsuario = teclado.nextLine();
+                                    System.out.println("Ingrese su contraseña:");
+                                    String contrasena = teclado.nextLine();
+
+                                    boolean existeEstudiante = false;
+                                    for (Usuario u : usuarios) {
+                                        if (u.getNombreUsuario().equals(nombreUsuario)) {
+                                            existeEstudiante = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (existeEstudiante) {
+                                        System.out.println("Ese nombre de usuario ya existe.");
+                                    } else {
+                                        usuarios.add(new Estudiante(nombre, seccion, nombreUsuario, contrasena));
+                                        System.out.println("Usuario registrado como Estudiante.");
+                                    }
+                                    break;
+
+                                case 2:
+                                    System.out.println("\n---- REGISTRAR PROFESOR ----");
+                                    System.out.println("Ingrese su nombre:");
+                                    nombre = teclado.nextLine();
+                                    System.out.println("Ingrese su sección:");
+                                    seccion = teclado.nextLine();
+                                    System.out.println("Ingrese su nombre de usuario:");
+                                    nombreUsuario = teclado.nextLine();
+                                    System.out.println("Ingrese su contraseña:");
+                                    contrasena = teclado.nextLine();
+
+                                    boolean existeProfesor = false;
+                                    for (Usuario u : usuarios) {
+                                        if (u.getNombreUsuario().equals(nombreUsuario)) {
+                                            existeProfesor = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (existeProfesor) {
+                                        System.out.println("Ese nombre de usuario ya existe.");
+                                    } else {
+                                        usuarios.add(new Profesor(nombre, seccion, nombreUsuario, contrasena));
+                                        System.out.println("Usuario registrado como Profesor.");
+                                    }
+                                    break; 
+
+                                default:
+                                    System.out.println("Entrada no válida. Ingrese 1 o 2.");
+                                    break;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Entrada no válida. Ingrese un número.");
+                            teclado.nextLine();
+                        }
+                        break;
+
+                    case 2:
+                        System.out.println("\nIngrese su nombre de usuario:");
+                        String user = teclado.nextLine();
+                        System.out.println("Ingrese su contraseña:");
+                        String pass = teclado.nextLine();
+
+                        Usuario usuarioEncontrado = null;
+                        for (Usuario u : usuarios) {
+                            if (u.getNombreUsuario().equals(user) && u.getContrasena().equals(pass)) {
+                                usuarioEncontrado = u;
+                                break;
+                            }
+                        }
+
+                        if (usuarioEncontrado == null) {
+                            System.out.println("Usuario o contraseña incorrectos.");
+                        } else {
+                            System.out.println("Inicio de sesión correcto.");
+                            System.out.println("Bienvenido: " + usuarioEncontrado.getNombre());
+
+
+                            if (usuarioEncontrado.getTipoUsuario().equalsIgnoreCase("Estudiante")) {
+                                boolean enMenuEstudiante = true;
+                                while (enMenuEstudiante) {
+                                    System.out.println("\n=== MENU ESTUDIANTE ===");
+                                    System.out.println("1. Resolver ejercicio");
+                                    System.out.println("2. Ver mi desempeno");
+                                    System.out.println("3. Volver al menu principal");
+
+                                    try {
+                                        int opEstudiante = teclado.nextInt();
+                                        teclado.nextLine();
+
+                                        switch(opEstudiante){
+                                            case 1:
+                                                System.out.println("\n---- RESOLVER EJERCICIO ----");
+
+                                                break;
+                                            case 2: 
+                                                System.out.println("\n---- DESEMPEÑO ----");
+                                                System.out.println("\nEl desempeño para "+u.getNombre()+" es:");
+                                                break;
+                                            case 3:
+                                                System.out.println("\nRegresando. . .");
+                                            enMenuEstudiante = false;
+                                                break;
+                                            default:
+                                            System.out.println("Opción no válida.");
+                                        }
+                                    } catch (Exception e) {
+                                        System.out.println("Opción no válida.");
+                                        teclado.nextLine();
+                                    }
+                                }
+                            } 
+                        }
+                        break;
+
+                    case 3:
+                        System.out.println("\nSaliendo. . .");
+                        inicio = false;
+                        break;
+
+                    default:
+                        System.out.println("Entrada no válida. Debe ingresar un número entre 1 y 3.");
+                        break;
                 }
+            } catch (Exception e) {
+                System.out.println("Entrada no válida. Debe ingresar un número entre 1 y 3.");
+                teclado.nextLine();
             }
         }
-        interfaz.mostrarTexto("Programa finalizado.");
     }
-
-    private void registrar(Scanner teclado) {
-        interfaz.mostrarTexto("\n1. Estudiante");
-        interfaz.mostrarTexto("2. Profesor");
-        int tipo = interfaz.leerOpcion(teclado, 1, 2);
-
-        String nombre = interfaz.leerLinea(teclado, "Nombre completo: ");
-        String seccion = interfaz.leerLinea(teclado, "Seccion: ");
-        String nombreUsuario = interfaz.leerLinea(teclado, "Nombre de usuario: ");
-        String contrasena = interfaz.leerLinea(teclado, "Contrasena: ");
-
-        try {
-            Usuario usuario = tipo == 1
-                    ? new Estudiante(nombre, seccion, nombreUsuario, contrasena)
-                    : new Profesor(nombre, seccion, nombreUsuario, contrasena);
-
-            if (sistemaLogin.registrarUsuario(usuario)) {
-                interfaz.mostrarTexto("Usuario registrado como " + usuario.getTipoUsuario() + ".");
-            } else {
-                interfaz.mostrarTexto("Ese nombre de usuario ya existe.");
-            }
-        } catch (IllegalArgumentException e) {
-            interfaz.mostrarTexto("No se pudo registrar: " + e.getMessage());
-        }
-    }
-
-    private void iniciarSesion(Scanner teclado) {
-        String nombreUsuario = interfaz.leerLinea(teclado, "Nombre de usuario: ");
-        String contrasena = interfaz.leerLinea(teclado, "Contrasena: ");
-
-        Usuario usuario = sistemaLogin.iniciarSesion(nombreUsuario, contrasena);
-        if (usuario == null) {
-            interfaz.mostrarTexto("Usuario o contrasena incorrectos.");
-            return;
-        }
-
-        interfaz.mostrarTexto("Inicio de sesion correcto.");
-        interfaz.mostrarTexto("Bienvenido: " + usuario.getNombre());
-        interfaz.mostrarTexto("Tipo de usuario: " + usuario.getTipoUsuario());
-        interfaz.mostrarTexto("Seccion: " + usuario.getSeccion());
-
-        if (usuario instanceof Estudiante estudiante){
-            menuEstudiante(Estudiante, teclado);
-        }
-        else if (usuario instanceof Profesor profesor){
-            menuProfesor(profesor, teclado);
-        }
-    }
-    
 }
