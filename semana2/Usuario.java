@@ -1,4 +1,4 @@
-package semana1;
+package semana2;
 
 public class Usuario {
     private String nombre;
