@@ -29,25 +29,6 @@ public class GestorResultados {
         return resultadosEstudiante;
     }
 
-    public double calcularDesempenoIndividual(String estudiante) {
-
-        ArrayList<Resultado> resultadosEstudiante = obtenerResultadosPorEstudiante(estudiante);
-
-        if (resultadosEstudiante.isEmpty()) {
-            return 0.0;
-
-        }
-
-        int aciertos = 0;
-
-         for (int i = 0; i < resultadosEstudiante.size(); i++) {
-            if (resultadosEstudiante.get(i).isCorrecto()) {
-                aciertos++;
-            }
-        }
-
-        return (double) aciertos / resultadosEstudiante.size() * 100;
-    }
 
      
     
