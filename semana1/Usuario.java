@@ -1,3 +1,5 @@
+package semana1;
+
 public class Usuario {
     private String nombre;
     private String seccion;
