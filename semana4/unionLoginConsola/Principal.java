@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Principal {
     
     private static List<Usuario> usuarios = new ArrayList<>();
+    private static GestorResultados gestorResultados = new GestorResultados();
 
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
@@ -134,11 +135,11 @@ public class Principal {
                                         switch(opEstudiante){
                                             case 1:
                                                 System.out.println("\n---- RESOLVER EJERCICIO ----");
-
                                                 break;
                                             case 2: 
                                                 System.out.println("\n---- DESEMPEÑO ----");
-                                                System.out.println("\nEl desempeño para "+usuarioEncontrado.getNombre()+" es:");
+                                                double desempeno = gestorResultados.calcularDesempenoIndividual(usuarioEncontrado.getNombreUsuario());
+                                                System.out.println("\nEl desempeño para "+usuarioEncontrado.getNombre()+" es: " + desempeno + "%");
                                                 break;
                                             case 3:
                                                 System.out.println("\nRegresando. . .");
@@ -181,7 +182,8 @@ public class Principal {
                                                 }
                                                 
                                                 if (existe){
-                                                    System.out.println("El desempeño para "+nombreEncontrado+" es: ");
+                                                    double desempenoProfesor = gestorResultados.calcularDesempenoIndividual(revisarusuario);
+                                                    System.out.println("El desempeño para "+nombreEncontrado+" es: " + desempenoProfesor + "%");
                                                 } else {
                                                     System.out.println("No se ha podido encontrar al usuario");
                                                 }
