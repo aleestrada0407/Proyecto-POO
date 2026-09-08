@@ -27,6 +27,9 @@ public class BancoEjercicios {
         ej3.llenarEcuacion(new String[]{"Fe", "HCl"}, new String[]{"FeCl3", "H2"}, new int[]{2, 6}, new int[]{2, 3});
         ejerciciosBalanceo.add(ej3);
 
+        Ejercicio ej4 = new Ejercicio("Balancee la ecuacion de reaccion del cobre con acido fosforico:");
+        ej4.llenarEcuacion(new String[]{"Cu", "H3PO4"}, new String[]{"Cu3(PO4)2", "P", "H2O"}, new int[]{15, 16}, new int[]{5, 6, 24});
+        ejerciciosBalanceo.add(ej4);
         
     }
 
