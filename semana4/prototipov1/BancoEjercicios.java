@@ -22,6 +22,12 @@ public class BancoEjercicios {
         Ejercicio ej2 = new Ejercicio("Balancee la ecuacion de sintesis del amoniaco:");
         ej2.llenarEcuacion(new String[]{"N2", "H2"}, new String[]{"NH3"}, new int[]{1, 3}, new int[]{2});
         ejerciciosBalanceo.add(ej2);
+
+        Ejercicio ej3 = new Ejercicio("Balancee la ecuacion de reaccion del hierro con acido clorhidrico:");
+        ej3.llenarEcuacion(new String[]{"Fe", "HCl"}, new String[]{"FeCl3", "H2"}, new int[]{2, 6}, new int[]{2, 3});
+        ejerciciosBalanceo.add(ej3);
+
+        
     }
 
 
