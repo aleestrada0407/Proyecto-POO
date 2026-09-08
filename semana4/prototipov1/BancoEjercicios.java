@@ -31,6 +31,13 @@ public class BancoEjercicios {
         ej4.llenarEcuacion(new String[]{"Cu", "H3PO4"}, new String[]{"Cu3(PO4)2", "P", "H2O"}, new int[]{15, 16}, new int[]{5, 6, 24});
         ejerciciosBalanceo.add(ej4);
         
+        Ejercicio ej5 = new Ejercicio("Balancee la ecuacion de reaccion del cadmio con acido nitrico:");
+        ej5.llenarEcuacion(new String[]{"Cd", "HNO3"}, new String[]{"Cd(NO3)2", "H2O", "NO2"}, new int[]{1, 4}, new int[]{1, 2, 2});
+        ejerciciosBalanceo.add(ej5);
+
+        Ejercicio ej6 = new Ejercicio("Balancee la ecuacion de descomposicion del permanganato de potasio con acido sulfurico:");
+        ej6.llenarEcuacion(new String[]{"KMnO4", "H2SO4"}, new String[]{"O2", "K2SO4", "MnSO4", "H2O"}, new int[]{4, 6}, new int[]{5, 2, 4, 6});
+        ejerciciosBalanceo.add(ej6);
     }
 
 
