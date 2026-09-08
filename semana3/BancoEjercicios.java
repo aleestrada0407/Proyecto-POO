@@ -49,4 +49,17 @@ public class BancoEjercicios {
     public ArrayList<Ejercicio> getEjerciciosBalanceo() {
         return ejerciciosBalanceo;
     }
+
+    public int getIndiceActual() {
+        return indiceActual;
+    }
+
+    public int getCantidadTotalEjercicios() {
+        return ejerciciosBalanceo.size();
+    }
+
+    public double obtenerPorcentajeAvance() {
+        if (ejerciciosBalanceo.isEmpty()) return 0.0;
+        return ((double) indiceActual / ejerciciosBalanceo.size()) * 100;
+    }
 }
