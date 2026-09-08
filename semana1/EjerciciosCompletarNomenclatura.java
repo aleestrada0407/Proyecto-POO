@@ -1,9 +1,9 @@
-public class EjercicioCompletarNomenclatura {
+public class EjerciciosCompletarNomenclatura{
 
     private String formulaQuimica;
     private String respuestaEsperada;
 
-    public EjercicioCompletarNomenclatura(
+    public EjerciciosCompletarNomenclatura(
             String formulaQuimica,
             String respuestaEsperada) {
 
