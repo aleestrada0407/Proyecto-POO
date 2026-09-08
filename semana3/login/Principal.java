@@ -3,9 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
-    private final SistemaLogin sistemaLogin;
-    private final InterfazLogin interfaz;
-    private final GestorResultados gestorResultados;
+    
     private static List<Usuario> usuarios = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -124,7 +122,7 @@ public class Principal {
                             if (usuarioEncontrado.getTipoUsuario().equalsIgnoreCase("Estudiante")) {
                                 boolean enMenuEstudiante = true;
                                 while (enMenuEstudiante) {
-                                    System.out.println("\n=== MENU ESTUDIANTE ===");
+                                    System.out.println("\n---- MENU ESTUDIANTE ----");
                                     System.out.println("1. Resolver ejercicio");
                                     System.out.println("2. Ver mi desempeno");
                                     System.out.println("3. Volver al menu principal");
@@ -140,14 +138,14 @@ public class Principal {
                                                 break;
                                             case 2: 
                                                 System.out.println("\n---- DESEMPEÑO ----");
-                                                System.out.println("\nEl desempeño para "+u.getNombre()+" es:");
+                                                System.out.println("\nEl desempeño para "+usuarioEncontrado.getNombre()+" es:");
                                                 break;
                                             case 3:
                                                 System.out.println("\nRegresando. . .");
-                                            enMenuEstudiante = false;
+                                                enMenuEstudiante = false;
                                                 break;
                                             default:
-                                            System.out.println("Opción no válida.");
+                                                System.out.println("Opción no válida.");
                                         }
                                     } catch (Exception e) {
                                         System.out.println("Opción no válida.");
@@ -155,6 +153,53 @@ public class Principal {
                                     }
                                 }
                             } 
+                            else if (usuarioEncontrado.getTipoUsuario().equalsIgnoreCase("Profesor")) {
+                                boolean enMenuProfesor = true;
+                                while (enMenuProfesor) {
+                                    System.out.println("\n---- MENU PROFESOR ----");
+                                    System.out.println("1. Consultar desempeno de un estudiante");
+                                    System.out.println("2. Volver al menu principal");
+
+                                    try {
+                                        int opProfesor = teclado.nextInt();
+                                        teclado.nextLine();
+
+                                        switch(opProfesor){
+                                            case 1:
+                                                System.out.println("\n---- DESEMPEÑO ----");
+                                                System.out.println("\nIngrese el nombre de usuario del estudiante");
+                                                String revisarusuario = teclado.nextLine();
+                                                
+                                                boolean existe = false;
+                                                String nombreEncontrado = "";
+                                                for (Usuario u : usuarios) {
+                                                    if (u.getNombreUsuario().equals(revisarusuario)) {
+                                                        existe = true;
+                                                        nombreEncontrado = u.getNombre();
+                                                        break;
+                                                    }
+                                                }
+                                                
+                                                if (existe){
+                                                    System.out.println("El desempeño para "+nombreEncontrado+" es: ");
+                                                } else {
+                                                    System.out.println("No se ha podido encontrar al usuario");
+                                                }
+                                                
+                                                break;
+                                            case 2: 
+                                                System.out.println("\nRegresando. . .");
+                                                enMenuProfesor = false;
+                                                break;
+                                            default:
+                                                System.out.println("Opción no válida.");
+                                        }
+                                    } catch (Exception e) {
+                                        System.out.println("Opción no válida.");
+                                        teclado.nextLine();
+                                    }
+                                }
+                            }
                         }
                         break;
 
