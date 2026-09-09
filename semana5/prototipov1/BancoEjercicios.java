@@ -44,9 +44,17 @@ public class BancoEjercicios {
         ej7.llenarEcuacion(new String[]{"C8H7N", "O2"}, new String[]{"CO2", "H2O", "N2"}, new int[]{4, 39}, new int[]{32, 14, 2});
         ejerciciosBalanceo.add(ej7);
 
-        Ejercicio ej8 = new Ejercicio("Balancee la ecuacion de reacción cromato de plomo (II) con yoduro de potasio y ácido clorhídrico:");
+        Ejercicio ej8 = new Ejercicio("Balancee la ecuacion de reacción del cromato de plomo (II) con yoduro de potasio y ácido clorhídrico:");
         ej8.llenarEcuacion(new String[]{"PbCrO4", "KI", "HCl"}, new String[]{"PbCl2", "CrI3", "KCl", "I2", "H2O"}, new int[]{2, 12, 16}, new int[]{2, 2, 12, 3, 8});
         ejerciciosBalanceo.add(ej8);
+
+        Ejercicio ej9 = new Ejercicio("Balancee la ecuacion de reacción del permanganato de potasio con el sulfuro ferroso y el ácido sulfúrico:");
+        ej9.llenarEcuacion(new String[]{"KMnO4", "FeSO4", "H2SO4"}, new String[]{"MnSO4", "Fe2(SO4)3", "K2SO4", "H2O"}, new int[]{2, 10, 8}, new int[]{2, 5, 1, 8});
+        ejerciciosBalanceo.add(ej9);
+
+        Ejercicio ej10 = new Ejercicio("Balancee la ecuacion de reacción del cloro con el hidróxido de potasio:");
+        ej10.llenarEcuacion(new String[]{"Cl2", "KOH"}, new String[]{"KClO4", "KCl", "H2O"}, new int[]{4, 8}, new int[]{1, 7, 4});
+        ejerciciosBalanceo.add(ej10);
 
     }
 
