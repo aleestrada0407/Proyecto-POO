@@ -56,6 +56,13 @@ public class BancoEjercicios {
         ej10.llenarEcuacion(new String[]{"Cl2", "KOH"}, new String[]{"KClO4", "KCl", "H2O"}, new int[]{4, 8}, new int[]{1, 7, 4});
         ejerciciosBalanceo.add(ej10);
 
+        Ejercicio ej11 = new Ejercicio("Balancee la ecuación de reacción del ácido fosfórico con molibdato de amonio:");
+        ej11.llenarEcuacion(new String[]{"H3PO4", "(NH4)2MoO4"}, new String[]{"(NH4)3PO4", "MoO3", "H2O"}, new int[]{2, 3}, new int[]{2, 3, 3});
+        ejerciciosBalanceo.add(ej11);
+
+        Ejercicio ej12 = new Ejercicio("Balancee la ecuacion de reacción del bromuro de yodo con el amoníaco:");
+        ej12.llenarEcuacion(new String[]{"IBr", "NH3"}, new String[]{"NI3", "NH4Br"}, new int[]{3, 4}, new int[]{1, 3});
+        ejerciciosBalanceo.add(ej12);
     }
 
 
