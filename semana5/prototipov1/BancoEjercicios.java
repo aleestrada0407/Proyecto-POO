@@ -64,7 +64,7 @@ public class BancoEjercicios {
         ej12.llenarEcuacion(new String[]{"IBr", "NH3"}, new String[]{"NI3", "NH4Br"}, new int[]{3, 4}, new int[]{1, 3});
         ejerciciosBalanceo.add(ej12);
 
-        
+
 
         Ejercicio ej13 = new Ejercicio("Balancee la ecuacion de combustion del metano:");
         ej13.llenarEcuacion(new String[]{"CH4", "O2"}, new String[]{"CO2", "H2O"}, new int[]{1, 2}, new int[]{1, 2});
@@ -89,6 +89,17 @@ public class BancoEjercicios {
         Ejercicio ej18 = new Ejercicio("Balancee la ecuacion de formacion del oxido de aluminio:");
         ej18.llenarEcuacion(new String[]{"Al", "O2"}, new String[]{"Al2O3"}, new int[]{4, 3}, new int[]{2});
         ejerciciosBalanceo.add(ej18);
+
+        Ejercicio ej19 = new Ejercicio("Balancee la ecuacion de oxidacion del hierro para formar oxido de hierro (III):");
+        ej19.llenarEcuacion(new String[]{"Fe", "O2"}, new String[]{"Fe2O3"}, new int[]{4, 3}, new int[]{2});
+        ejerciciosBalanceo.add(ej19);
+
+        Ejercicio ej20 = new Ejercicio("Balancee la ecuacion de descomposicion del peroxido de hidrogeno:");
+        ej20.llenarEcuacion(new String[]{"H2O2"}, new String[]{"H2O", "O2"}, new int[]{2}, new int[]{2, 1});
+        ejerciciosBalanceo.add(ej20);
+
+
+
 
         
 
