@@ -82,6 +82,14 @@ public class BancoEjercicios {
         ej16.llenarEcuacion(new String[]{"NaOH", "H2SO4"}, new String[]{"Na2SO4", "H2O"}, new int[]{2, 1}, new int[]{1, 2});
         ejerciciosBalanceo.add(ej16);
 
+        Ejercicio ej17 = new Ejercicio("Balancee la ecuacion de reaccion del zinc con acido clorhidrico:");
+        ej17.llenarEcuacion(new String[]{"Zn", "HCl"}, new String[]{"ZnCl2", "H2"}, new int[]{1, 2}, new int[]{1, 1});
+        ejerciciosBalanceo.add(ej17);
+
+        Ejercicio ej18 = new Ejercicio("Balancee la ecuacion de formacion del oxido de aluminio:");
+        ej18.llenarEcuacion(new String[]{"Al", "O2"}, new String[]{"Al2O3"}, new int[]{4, 3}, new int[]{2});
+        ejerciciosBalanceo.add(ej18);
+
         
 
         
