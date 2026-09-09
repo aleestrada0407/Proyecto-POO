@@ -98,6 +98,14 @@ public class BancoEjercicios {
         ej20.llenarEcuacion(new String[]{"H2O2"}, new String[]{"H2O", "O2"}, new int[]{2}, new int[]{2, 1});
         ejerciciosBalanceo.add(ej20);
 
+        Ejercicio ej21 = new Ejercicio("Balancee la ecuacion de descomposicion del carbonato de calcio:");
+        ej21.llenarEcuacion(new String[]{"CaCO3"}, new String[]{"CaO", "CO2"}, new int[]{1}, new int[]{1, 1});
+        ejerciciosBalanceo.add(ej21);
+
+        Ejercicio ej22 = new Ejercicio("Balancee la ecuacion entre nitrato de plata y cloruro de sodio:");
+        ej22.llenarEcuacion(new String[]{"AgNO3", "NaCl"}, new String[]{"AgCl", "NaNO3"}, new int[]{1, 1}, new int[]{1, 1});
+        ejerciciosBalanceo.add(ej22);
+
 
 
 
