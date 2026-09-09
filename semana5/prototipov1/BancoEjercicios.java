@@ -64,6 +64,8 @@ public class BancoEjercicios {
         ej12.llenarEcuacion(new String[]{"IBr", "NH3"}, new String[]{"NI3", "NH4Br"}, new int[]{3, 4}, new int[]{1, 3});
         ejerciciosBalanceo.add(ej12);
 
+        
+
         Ejercicio ej13 = new Ejercicio("Balancee la ecuacion de combustion del metano:");
         ej13.llenarEcuacion(new String[]{"CH4", "O2"}, new String[]{"CO2", "H2O"}, new int[]{1, 2}, new int[]{1, 2});
         ejerciciosBalanceo.add(ej13);
@@ -71,6 +73,14 @@ public class BancoEjercicios {
         Ejercicio ej14 = new Ejercicio("Balancee la ecuacion de combustion del propano:");
         ej14.llenarEcuacion(new String[]{"C3H8", "O2"}, new String[]{"CO2", "H2O"}, new int[]{1, 5}, new int[]{3, 4});
         ejerciciosBalanceo.add(ej14);
+
+        Ejercicio ej15 = new Ejercicio("Balancee la ecuacion de descomposicion del clorato de potasio:");
+        ej15.llenarEcuacion(new String[]{"KClO3"}, new String[]{"KCl", "O2"}, new int[]{2}, new int[]{2, 3});
+        ejerciciosBalanceo.add(ej15);
+
+        Ejercicio ej16 = new Ejercicio("Balancee la ecuacion de neutralizacion del hidroxido de sodio con acido sulfurico:");
+        ej16.llenarEcuacion(new String[]{"NaOH", "H2SO4"}, new String[]{"Na2SO4", "H2O"}, new int[]{2, 1}, new int[]{1, 2});
+        ejerciciosBalanceo.add(ej16);
 
         
 
