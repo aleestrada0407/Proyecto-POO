@@ -106,6 +106,14 @@ public class BancoEjercicios {
         ej22.llenarEcuacion(new String[]{"AgNO3", "NaCl"}, new String[]{"AgCl", "NaNO3"}, new int[]{1, 1}, new int[]{1, 1});
         ejerciciosBalanceo.add(ej22);
 
+        Ejercicio ej23 = new Ejercicio("Balancee la ecuacion de neutralizacion del hidroxido de calcio con acido clorhidrico:");
+        ej23.llenarEcuacion(new String[]{"HCl", "Ca(OH)2"}, new String[]{"CaCl2", "H2O"}, new int[]{2, 1}, new int[]{1, 2});
+        ejerciciosBalanceo.add(ej23);
+
+        Ejercicio ej24 = new Ejercicio("Balancee la ecuacion redox entre permanganato de potasio y acido clorhidrico:");
+        ej24.llenarEcuacion(new String[]{"KMnO4", "HCl"}, new String[]{"KCl", "MnCl2", "H2O", "Cl2"}, new int[]{2, 16}, new int[]{2, 2, 8, 5});
+        ejerciciosBalanceo.add(ej24);
+
 
 
 
