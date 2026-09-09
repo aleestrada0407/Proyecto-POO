@@ -151,6 +151,16 @@ public class Principal {
 
                                             System.out.println("Progreso del banco: " + banco.obtenerPorcentajeAvance() + "%");
                                         }   
+                                        
+                                            else {
+                                                System.out.println("Ya no hay más ejercicios disponibles.");
+                                                System.out.println("¿Desea reiniciar el banco de ejercicios? (s/n)");
+                                                String resp = teclado.nextLine();
+                                            if (resp.equalsIgnoreCase("s")) {
+                                                banco.reiniciar();
+                                                System.out.println("Banco reiniciado.");
+                                            }
+                                            }
 
                                                 break;
                                             case 2: 
