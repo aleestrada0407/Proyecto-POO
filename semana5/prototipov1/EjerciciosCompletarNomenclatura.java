@@ -39,6 +39,10 @@ public class EjerciciosCompletarNomenclatura{
     }
 
     public boolean verificarRespuesta(String respuesta) {
+          if (modo == 2) {
+            // La fórmula respeta mayúsculas y minúsculas (Co no es CO)
+            return formulaQuimica.equals(respuesta.trim());
+        }
         return respuestaEsperada.equalsIgnoreCase(respuesta.trim());
     }
 
