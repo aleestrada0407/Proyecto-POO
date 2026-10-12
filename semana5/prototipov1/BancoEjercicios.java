@@ -116,9 +116,18 @@ public class BancoEjercicios {
         ej24.llenarEcuacion(new String[]{"KMnO4", "HCl"}, new String[]{"KCl", "MnCl2", "H2O", "Cl2"}, new int[]{2, 16}, new int[]{2, 2, 8, 5});
         ejerciciosBalanceo.add(ej24);
 
+        // Tarjetas que muestran la formula y piden el nombre.
+        EjerciciosCompletarNomenclatura tarjeta1 =
+                new EjerciciosCompletarNomenclatura("MnO4-", "Permanganato");
+        ejerciciosNomenclatura.add(tarjeta1);
 
+        EjerciciosCompletarNomenclatura tarjeta2 = new EjerciciosCompletarNomenclatura("NO3-", "Nitrato");
+        ejerciciosNomenclatura.add(tarjeta2);
 
+        EjerciciosCompletarNomenclatura tarjeta3 = new EjerciciosCompletarNomenclatura("OH-", "Hidroxido");
+        ejerciciosNomenclatura.add(tarjeta3);
 
+        
         
 
         
