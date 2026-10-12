@@ -5,12 +5,14 @@ public class BancoEjercicios {
     private ArrayList<EjerciciosCompletarNomenclatura> ejerciciosNomenclatura;
     private ArrayList<Ejercicio> ejerciciosBalanceo;
     private int indiceActual; 
+    private int indiceNomenclatura;
 
     public BancoEjercicios() {
         this.ejerciciosNomenclatura = new ArrayList<>();
         this.ejerciciosBalanceo = new ArrayList<>();
         this.indiceActual = 0;
         inicializarBanco();
+        this.indiceActual = 0;
     }
 
     private void inicializarBanco() {
