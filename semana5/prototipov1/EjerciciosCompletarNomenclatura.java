@@ -2,11 +2,10 @@ public class EjerciciosCompletarNomenclatura{
 
     private String formulaQuimica;
     private String respuestaEsperada;
+    private int modo;
 
-    public EjerciciosCompletarNomenclatura(
-            String formulaQuimica,
-            String respuestaEsperada) {
-
+    public EjerciciosCompletarNomenclatura(String formulaQuimica, String respuestaEsperada, int modo) {
+        this.modo = 1;
         this.formulaQuimica = formulaQuimica;
         this.respuestaEsperada = respuestaEsperada;
     }
@@ -36,4 +35,12 @@ public class EjerciciosCompletarNomenclatura{
                 "Escriba el nombre del compuesto: " + formulaQuimica
         );
     }
+    public int getModo() {
+        return modo;
+    }
+
+    public void setModo(int modo) {
+        this.modo = modo;
+    }
+
 }
