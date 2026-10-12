@@ -11,8 +11,8 @@ public class BancoEjercicios {
         this.ejerciciosNomenclatura = new ArrayList<>();
         this.ejerciciosBalanceo = new ArrayList<>();
         this.indiceActual = 0;
+        this.indiceNomenclatura = 0;
         inicializarBanco();
-        this.indiceActual = 0;
     }
 
     private void inicializarBanco() {
@@ -188,5 +188,37 @@ public class BancoEjercicios {
     public double obtenerPorcentajeAvance() {
         if (ejerciciosBalanceo.isEmpty()) return 0.0;
         return ((double) indiceActual / ejerciciosBalanceo.size()) * 100;
+    }
+    public boolean haySiguienteNomenclatura() {
+    return indiceNomenclatura < ejerciciosNomenclatura.size();
+}
+
+public EjerciciosCompletarNomenclatura obtenerSiguienteNomenclatura() {
+    if (haySiguienteNomenclatura()) {
+        EjerciciosCompletarNomenclatura ejercicio =
+                ejerciciosNomenclatura.get(indiceNomenclatura);
+
+        indiceNomenclatura++;
+        return ejercicio;
+    }
+
+    return null;
+    }
+
+    public void reiniciarNomenclatura() {
+        indiceNomenclatura = 0;
+    }
+
+    public int getCantidadTotalNomenclatura() {
+        return ejerciciosNomenclatura.size();
+    }
+
+    public double obtenerPorcentajeAvanceNomenclatura() {
+        if (ejerciciosNomenclatura.isEmpty()) {
+            return 0.0;
+        }
+
+        return ((double) indiceNomenclatura
+                / ejerciciosNomenclatura.size()) * 100;
     }
 }
