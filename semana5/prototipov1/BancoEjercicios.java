@@ -127,7 +127,23 @@ public class BancoEjercicios {
         EjerciciosCompletarNomenclatura tarjeta3 = new EjerciciosCompletarNomenclatura("OH-", "Hidroxido");
         ejerciciosNomenclatura.add(tarjeta3);
 
-        
+        // Tarjetas que muestran el nombre y piden la formula.
+        EjerciciosCompletarNomenclatura tarjeta4 =
+            new EjerciciosCompletarNomenclatura("MnO4-", "Permanganato");
+        tarjeta4.setModo(2);
+        ejerciciosNomenclatura.add(tarjeta4);
+
+        EjerciciosCompletarNomenclatura tarjeta5 =
+            new EjerciciosCompletarNomenclatura("NO3-", "Nitrato");
+            tarjeta5.setModo(2);
+        ejerciciosNomenclatura.add(tarjeta5);
+
+        EjerciciosCompletarNomenclatura tarjeta6 =
+            new EjerciciosCompletarNomenclatura("OH-", "Hidroxido");
+            tarjeta6.setModo(2);
+        ejerciciosNomenclatura.add(tarjeta6);
+
+
         
 
         
