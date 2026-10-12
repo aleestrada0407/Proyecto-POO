@@ -41,11 +41,17 @@ public class EjerciciosCompletarNomenclatura{
     }
 
     public boolean verificarRespuesta(String respuesta) {
-          if (modo == 2) {
-            // La fórmula respeta mayúsculas y minúsculas (Co no es CO)
-            return formulaQuimica.equals(respuesta.trim());
-        }
-        return respuestaEsperada.equalsIgnoreCase(respuesta.trim());
+         if (respuesta == null || respuesta.trim().isEmpty()) {
+        return false;
+    }
+
+    String respuestaLimpia = respuesta.trim();
+
+    if (modo == 2) {
+        return formulaQuimica.equals(respuestaLimpia);
+    }
+
+    return respuestaEsperada.equalsIgnoreCase(respuestaLimpia);
     }
 
     public void mostrarEjercicio() {
@@ -65,7 +71,13 @@ public class EjerciciosCompletarNomenclatura{
     }
 
     public void setModo(int modo) {
-        this.modo = modo;
+          if (modo != 1 && modo != 2) {
+        throw new IllegalArgumentException(
+                "El modo debe ser 1 o 2."
+        );
+    }
+
+    this.modo = modo;
     }
         public String[] getElementos() {
         return elementos;
