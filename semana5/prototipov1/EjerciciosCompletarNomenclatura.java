@@ -2,14 +2,12 @@ public class EjerciciosCompletarNomenclatura{
 
     private String formulaQuimica;
     private String respuestaEsperada;
-    private int modo; // 1: fórmula->nombre, 2: nombre->fórmula, 3: fórmula->elementos, 4: nombre->elementos
+    private int modo;
     private String[] elementos;
 
-    public EjerciciosCompletarNomenclatura(String formulaQuimica, String respuestaEsperada) {
-        this.modo = 1;
-        this.formulaQuimica = formulaQuimica;
-        this.respuestaEsperada = respuestaEsperada;
-        this.elementos = new String[0];
+      public EjerciciosCompletarNomenclatura(
+            String formulaQuimica,
+            String respuestaEsperada) {this(formulaQuimica, respuestaEsperada, new String[0]);
     }
       public EjerciciosCompletarNomenclatura(
             String formulaQuimica,
@@ -31,7 +29,11 @@ public class EjerciciosCompletarNomenclatura{
     }
 
     public String getRespuestaEsperada() {
-        return respuestaEsperada;
+          if (modo == 2) {
+        return formulaQuimica;
+    }
+
+    return respuestaEsperada;
     }
 
     public void setRespuestaEsperada(String respuestaEsperada) {
