@@ -26,6 +26,9 @@ public class PanelInicio extends JPanel {
         entrar.addActionListener(e -> gestor.mostrarLogin());
         add(entrar);
 
-
+        JButton registrar = new JButton("Crear cuenta");
+        registrar.setMaximumSize(new Dimension(220, 35));
+        registrar.addActionListener(e -> gestor.mostrarRegistro());
+        add(registrar);
     }
 }

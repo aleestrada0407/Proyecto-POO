@@ -29,13 +29,16 @@ public class PanelLogin extends JPanel {
         entrar.addActionListener(e -> procesarLogin());
         add(entrar);
 
+        JButton registro = new JButton("Crear cuenta");
+        registro.addActionListener(e -> gestor.mostrarRegistro());
+        add(registro);
 
         JButton volver = new JButton("Volver al inicio");
         volver.addActionListener(e -> gestor.mostrarInicio());
         add(volver);
     }
 
-
+    
     private void procesarLogin() {
         String usuario = campoUsuario.getText().trim();
         char[] clave = campoClave.getPassword();

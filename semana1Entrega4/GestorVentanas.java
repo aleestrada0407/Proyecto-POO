@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 public class GestorVentanas extends JFrame {
     private static final String INICIO = "inicio";
     private static final String LOGIN = "login";
-
+    private static final String REGISTRO = "registro";
 
     private final CardLayout tarjetas = new CardLayout();
     private final JPanel contenedor = new JPanel(tarjetas);
@@ -22,8 +22,8 @@ public class GestorVentanas extends JFrame {
 
         // se crea una sola instancia de cada pantalla.
         contenedor.add(new PanelInicio(this), INICIO);
-
-
+        contenedor.add(new PanelLogin(this), LOGIN);
+        contenedor.add(new PanelRegistro(this), REGISTRO);
         add(contenedor, BorderLayout.CENTER);
 
         mostrarInicio();
@@ -37,5 +37,8 @@ public class GestorVentanas extends JFrame {
         tarjetas.show(contenedor, LOGIN);
     }
 
+    public void mostrarRegistro() {
+        tarjetas.show(contenedor, REGISTRO);
+    }
 
 }
