@@ -35,10 +35,18 @@ public class PanelLogin extends JPanel {
 
          //espacio entre los botones para dejar un poco de distancia
         add(Box.createVerticalStrut(12));
-        JButton entrar = new JButton("Entrar");
+        JButton entrar = new JButton("Entrar ESTUDIANTE");
         entrar.setMaximumSize(new Dimension(200, 35));
         entrar.addActionListener(e -> procesarLogin());
         add(entrar);
+        //IMPORTANTE eliminar el botón de "profesor" cuando se tenga el sistema de log in. 
+        // Por ahora no existe modo de diferenciar entre los dos perfiles y se necesita este botón
+
+        JButton entrarprof = new JButton("profesor");
+        entrarprof.setMaximumSize(new Dimension(200, 35));
+        entrarprof.addActionListener(e -> procesarLoginProf());
+        add(entrarprof);
+
 
         JButton registro = new JButton("Crear cuenta");
         registro.setMaximumSize(new Dimension(200, 35));
@@ -67,7 +75,7 @@ public class PanelLogin extends JPanel {
 
             // aquí se debe conectar con la base de datos para hacer el inicio se sesión y comprobar los datos, por ahora siempre avanza a la pestaña de ejercicios
             JOptionPane.showMessageDialog(this,
-                    "Inicio de sesión exitoso.");
+                    "Inicio de sesión exitoso.");//Se avanza de clase pero no se 
             gestor.mostrarEstudiante();
         } finally {
             //estas lineas limpian los espacios para contraseña
@@ -75,4 +83,26 @@ public class PanelLogin extends JPanel {
             campoClave.setText("");
         }
     }
+private void procesarLoginProf() {
+        String usuario = campoUsuario.getText().trim();
+        char[] clave = campoClave.getPassword();
+        try {
+            if (usuario.isEmpty() || clave.length == 0) {
+                JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incompletos.");
+                return;
+            }
+
+            // aquí se debe conectar con la base de datos para hacer el inicio se sesión y comprobar los datos, por ahora siempre avanza a la pestaña de ejercicios
+            JOptionPane.showMessageDialog(this,
+                    "Inicio de sesión exitoso.");//Se avanza de clase pero no se 
+            gestor.mostrarProfesor();
+        } finally {
+            //estas lineas limpian los espacios para contraseña
+            Arrays.fill(clave, '\0');
+            campoClave.setText("");
+        }
+    }
+
+
 }
+
