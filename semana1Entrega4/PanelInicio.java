@@ -1,7 +1,9 @@
+import java.awt.Dimension;
 import java.net.URL;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -18,6 +20,11 @@ public class PanelInicio extends JPanel {
         if (imagen != null) {
             add(new JLabel(new ImageIcon(imagen)));
         }
+
+        JButton entrar = new JButton("Iniciar sesión");
+        entrar.setMaximumSize(new Dimension(220, 35));
+        entrar.addActionListener(e -> gestor.mostrarLogin());
+        add(entrar);
 
 
     }

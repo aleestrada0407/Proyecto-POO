@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 // Administra la ventana principal y decide qué panel está visible.
 public class GestorVentanas extends JFrame {
     private static final String INICIO = "inicio";
+    private static final String LOGIN = "login";
 
 
     private final CardLayout tarjetas = new CardLayout();
@@ -32,5 +33,9 @@ public class GestorVentanas extends JFrame {
         tarjetas.show(contenedor, INICIO);
     }
 
-   
+    public void mostrarLogin() {
+        tarjetas.show(contenedor, LOGIN);
+    }
+
+
 }
