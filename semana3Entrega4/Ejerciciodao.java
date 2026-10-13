@@ -74,4 +74,23 @@ public boolean insertar(Ejercicio ejercicio) {
         }
     }
 
+    public boolean existePorEnunciado(String enunciado) {
+
+    String sql = "SELECT 1 FROM ejercicios_balanceo WHERE enunciado = ?";
+
+    try (Connection conexion = BaseDatos.conectar();
+         PreparedStatement consulta = conexion.prepareStatement(sql)) {
+
+        consulta.setString(1, enunciado);
+
+        try (ResultSet fila = consulta.executeQuery()) {
+            return fila.next();
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al consultar el ejercicio: " + e.getMessage());
+        return true;
+    }
+}
+
 }
