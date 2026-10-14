@@ -1,4 +1,5 @@
 package vista;
+import login.SistemaLogin;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -68,6 +69,13 @@ public class GestorVentanas extends JFrame {
 
     public void mostrarBuscarAlumno(){
         tarjetas.show(contenedor, BUSCARALUMNO);
+    }
+
+    private final SistemaLogin sistemaLogin =
+        new SistemaLogin();
+
+    public SistemaLogin getSistemaLogin() {
+    return sistemaLogin;
     }
 
 }
