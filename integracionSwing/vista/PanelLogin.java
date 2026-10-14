@@ -40,18 +40,10 @@ public class PanelLogin extends JPanel {
 
          //espacio entre los botones para dejar un poco de distancia
         add(Box.createVerticalStrut(12));
-        JButton entrar = new JButton("Entrar ESTUDIANTE");
+        JButton entrar = new JButton("Iniciar sesión");
         entrar.setMaximumSize(new Dimension(200, 35));
         entrar.addActionListener(e -> procesarLogin());
         add(entrar);
-        //IMPORTANTE eliminar el botón de "profesor" cuando se tenga el sistema de log in. 
-        // Por ahora no existe modo de diferenciar entre los dos perfiles y se necesita este botón
-
-        JButton entrarprof = new JButton("profesor");
-        entrarprof.setMaximumSize(new Dimension(200, 35));
-        entrarprof.addActionListener(e -> procesarLoginProf());
-        add(entrarprof);
-
 
         JButton registro = new JButton("Crear cuenta");
         registro.setMaximumSize(new Dimension(200, 35));
@@ -72,7 +64,7 @@ public class PanelLogin extends JPanel {
     
     private void procesarLogin() {
 
-        System.out.println("DEBUG: Se ejecuta el login actualizado");
+        System.out.println("Se ejecuta el login actualizado");
 
         String nombreUsuario = campoUsuario.getText().trim();
         char[] clave = campoClave.getPassword();
