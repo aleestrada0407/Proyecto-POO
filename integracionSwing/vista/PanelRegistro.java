@@ -1,4 +1,7 @@
 package vista;
+import login.Usuario;
+import login.Estudiante;
+import login.Profesor;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -77,32 +80,76 @@ public class PanelRegistro extends JPanel {
 }
     }
 
+    
     private void procesarRegistro() {
         String nombre = campoNombre.getText().trim();
         String seccion = campoSeccion.getText().trim();
-        String usuario = campoUsuario.getText().trim();
+        String nombreUsuario = campoUsuario.getText().trim();
         String tipo = (String) campoTipo.getSelectedItem();
+
         char[] clave = campoClave.getPassword();
         char[] confirmacion = campoConfirmacion.getPassword();
+
         try {
-            if (nombre.isEmpty() || seccion.isEmpty() || usuario.isEmpty() || clave.length == 0) {
-                JOptionPane.showMessageDialog(this, "Completa todos los campos.");
-                return;
-            }
-            if (!"Estudiante".equals(tipo) && !"Profesor".equals(tipo)) {
-                JOptionPane.showMessageDialog(this, "Selecciona un tipo de usuario válido.");
+            // 1. Comprobar que los campos no estén vacíos
+            if (nombre.isEmpty() || seccion.isEmpty()
+                    || nombreUsuario.isEmpty() || clave.length == 0
+                    || confirmacion.length == 0) {
+
+                JOptionPane.showMessageDialog(this,
+                        "Completa todos los campos.");
                 return;
             }
 
-            // Aquí se regresa al menú de inicio pero no se registra nada, se debe conectar a la base de datos para guardar
-            JOptionPane.showMessageDialog(this,
-                    "Formulario de registro completo.");
-                    gestor.mostrarInicio();
-        } finally {//este finally limpia todas las casillas de contraseña
+            // 2. Verificar que las contraseñas coincidan
+            if (!Arrays.equals(clave, confirmacion)) {
+                JOptionPane.showMessageDialog(this,
+                        "Las contraseñas no coinciden.");
+                return;
+            }
+
+            // 3. Crear el usuario según su tipo
+            Usuario nuevoUsuario;
+
+            if ("Estudiante".equals(tipo)) {
+                nuevoUsuario = new Estudiante(
+                        nombre, seccion, nombreUsuario,
+                        new String(clave));
+            } else if ("Profesor".equals(tipo)) {
+                nuevoUsuario = new Profesor(
+                        nombre, seccion, nombreUsuario,
+                        new String(clave));
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Tipo de usuario no válido.");
+                return;
+            }
+
+            // 4. Registrar el usuario con la lógica existente
+            boolean registrado = gestor.getSistemaLogin()
+                    .registrarUsuario(nuevoUsuario);
+
+            // 5. Mostrar el resultado
+            if (registrado) {
+                JOptionPane.showMessageDialog(this,
+                        "¡Cuenta registrada correctamente!");
+
+                campoNombre.setText("");
+                campoSeccion.setText("");
+                campoUsuario.setText("");
+
+                gestor.mostrarLogin();
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Ese nombre de usuario ya existe.");
+            }
+
+        } finally {
             Arrays.fill(clave, '\0');
             Arrays.fill(confirmacion, '\0');
             campoClave.setText("");
             campoConfirmacion.setText("");
         }
     }
+
 }
