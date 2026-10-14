@@ -13,7 +13,9 @@ public class Principal {
     public static void main(String[] args) {
 
         BaseDatos.inicializar();
-        banco.sembrarBaseDatos(new Ejerciciodao());
+        Ejerciciodao ejerciciodao = new Ejerciciodao();
+        banco.sembrarBaseDatos(ejerciciodao);
+        banco.cargarDesdeBD(ejerciciodao);
         Scanner teclado = new Scanner(System.in);
         boolean inicio = true;
 

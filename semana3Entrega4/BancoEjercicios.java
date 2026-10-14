@@ -238,4 +238,17 @@ public EjerciciosCompletarNomenclatura obtenerSiguienteNomenclatura() {
         System.out.println("Banco inicial cargado en la base de datos: " + nuevos + " ejercicios.");
         }
     }
+
+    public void cargarDesdeBD(Ejerciciodao dao) {
+
+    ArrayList<Ejercicio> desdeBD = dao.listarTodos();
+
+    if (desdeBD.isEmpty()) {
+        System.out.println("No se pudo leer el banco desde la base de datos. Se usa el banco en memoria.");
+        return;
+    }
+
+    this.ejerciciosBalanceo = desdeBD;
+    this.indiceActual = 0;
+}
 }
