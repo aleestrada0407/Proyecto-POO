@@ -80,5 +80,28 @@ public class Resultadodao {
             }
         }
     }
+
+    public double calcularDesempeno(String nombreUsuario) {
+
+        String sql = "SELECT COUNT(*) AS total, SUM(r.correcto) AS aciertos "+ "FROM resultados r JOIN usuarios u ON u.id = r.usuario_id "+ "WHERE u.nombre_usuario = ?";
+
+        try (Connection conexion = BaseDatos.conectar();
+             PreparedStatement consulta = conexion.prepareStatement(sql)) {
+
+            consulta.setString(1, nombreUsuario);
+
+            try (ResultSet fila = consulta.executeQuery()) {
+
+                if (fila.next() && fila.getInt("total") > 0) {
+                    return (double) fila.getInt("aciertos") / fila.getInt("total") * 100;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al calcular el desempeno: " + e.getMessage());
+        }
+
+        return 0.0;
+    }
 }
  
