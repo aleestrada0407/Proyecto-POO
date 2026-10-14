@@ -1,4 +1,4 @@
-package integracionSwing.login;
+package login;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

@@ -1,4 +1,7 @@
 package vista;
+import login.Usuario;
+import login.Estudiante;
+import login.Profesor;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -66,25 +69,52 @@ public class PanelLogin extends JPanel {
     }
 
     
+    
     private void procesarLogin() {
-        String usuario = campoUsuario.getText().trim();
+
+        System.out.println("DEBUG: Se ejecuta el login actualizado");
+
+        String nombreUsuario = campoUsuario.getText().trim();
         char[] clave = campoClave.getPassword();
+
         try {
-            if (usuario.isEmpty() || clave.length == 0) {
-                JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incompletos.");
+            // 1. Verificar que los campos no estén vacíos
+            if (nombreUsuario.isEmpty() || clave.length == 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Completa el usuario y la contraseña.");
                 return;
             }
 
-            // aquí se debe conectar con la base de datos para hacer el inicio se sesión y comprobar los datos, por ahora siempre avanza a la pestaña de ejercicios
+            // 2. Comprobar las credenciales
+            Usuario usuario = gestor.getSistemaLogin()
+                    .iniciarSesion(nombreUsuario, new String(clave));
+
+            // 3. Verificar si el usuario existe
+            if (usuario == null) {
+                JOptionPane.showMessageDialog(this,
+                        "Usuario o contraseña incorrectos.");
+                return;
+            }
+
+            // 4. Mostrar mensaje de bienvenida
             JOptionPane.showMessageDialog(this,
-                    "Inicio de sesión exitoso.");//Se avanza de clase pero no se 
-            gestor.mostrarEstudiante();
+                    "¡Inicio de sesión exitoso!");
+
+            // 5. Abrir la pantalla correspondiente
+            if (usuario instanceof Estudiante) {
+                gestor.mostrarEstudiante();
+
+            } else if (usuario instanceof Profesor) {
+                gestor.mostrarProfesor();
+            }
+
         } finally {
-            //estas lineas limpian los espacios para contraseña
+            // Limpiar la contraseña después de utilizarla
             Arrays.fill(clave, '\0');
             campoClave.setText("");
         }
     }
+
 private void procesarLoginProf() {
         String usuario = campoUsuario.getText().trim();
         char[] clave = campoClave.getPassword();

@@ -1,4 +1,4 @@
-package integracionSwing.login;
+package login;
 
 public class Profesor extends Usuario {
     public Profesor(String nombre, String seccion, String nombreUsuario, String contrasena) {
