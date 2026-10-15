@@ -67,7 +67,6 @@ public class PanelInicio extends JPanel {
             g.drawImage(logo.getImage(), x, IMAGEN_Y, IMAGEN_ANCHO, IMAGEN_ALTO, this);
         } else {
             g.setColor(Color.DARK_GRAY);
-            g.drawString("No se encontró imagenes/logo.png", x, IMAGEN_Y + 20);
         }
     }
 }
