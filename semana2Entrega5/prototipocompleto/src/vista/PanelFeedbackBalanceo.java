@@ -62,4 +62,25 @@ public class PanelFeedbackBalanceo extends JPanel {
             mensaje.setText("¡Buen trabajo! Tu desempeño en balanceo es positivo. ¡Sigue así!");
         }
     }
+        // Se utiliza cuando el estudiante todavía no tiene respuestas registradas.
+    public void mostrarSinResultados() {
+
+        // Reemplaza el porcentaje anterior por un aviso de ausencia de resultados.
+        porcentaje.setText("Desempeño: sin resultados");
+
+        // Indica qué debe hacer el estudiante para obtener su desempeño.
+        mensaje.setText(
+                "Realiza ejercicios de balanceo para conocer tu desempeño.");
+    }
+
+    // Se utiliza cuando ocurre un error al consultar la base de datos.
+    public void mostrarErrorConsulta() {
+
+        // Quita cualquier porcentaje anterior porque no pudo actualizarse.
+        porcentaje.setText("Desempeño: no disponible");
+
+        // Informa del problema y explica cómo volver a intentarlo.
+        mensaje.setText(
+                "No se pudieron consultar tus resultados. Vuelve a abrir esta pantalla.");
+    }
 }
