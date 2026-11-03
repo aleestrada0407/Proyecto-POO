@@ -52,9 +52,14 @@ public class PanelFeedBackBalanceo extends JPanel {
 
         // Al pulsarlo, el gestor muestra el menú del estudiante.
         volver.addActionListener(e -> gestor.mostrarEstudiante());
-
+        // Operador Flecha indica que acción ejecutarse cuando ocurra evento
         // Agrega el botón al panel.
         add(volver);
 }
+ public void actualizarDesempeno(double desempeno) {
+
+        // Reemplaza el texto provisional por el porcentaje recibido.
+        porcentaje.setText("Desempeño: " + desempeno + "%");
+    }
 }
 
