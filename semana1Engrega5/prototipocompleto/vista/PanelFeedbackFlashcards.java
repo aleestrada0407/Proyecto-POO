@@ -1,30 +1,64 @@
 package vista;
 
-import java.awt.Component;
+// Importa las herramientas para crear y organizar la interfaz.
 import java.awt.Font;
-import javax.swing.JComponent;
-import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-        import java.awt.Graphics;
-        import java.awt.Color;
-
-        import java.net.URL;
+// Hereda de JPanel para funcionar como una pantalla del programa.
 public class PanelFeedbackFlashcards extends JPanel {
+       // Etiqueta donde después se mostrará el porcentaje del estudiante.
+    private final JLabel porcentaje =
+            new JLabel("Desempeño: pendiente");
+
+    // Etiqueta donde aparecerá el mensaje según el desempeño.
+    private final JLabel mensaje =
+            new JLabel("Aquí aparecerá tu retroalimentación.");
+
+// El constructor prepara los elementos del panel.
+    // Recibe el gestor para poder cambiar a otras pantallas.
     public PanelFeedbackFlashcards(GestorVentanas gestor) {
+
+        // Coloca los elementos uno debajo de otro.
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        // Agrega márgenes: arriba, izquierda, abajo y derecha.
+        setBorder(BorderFactory.createEmptyBorder(35, 60, 25, 30));
+
+        // Crea el título y establece su letra en negrita, tamaño 28.
+        JLabel titulo = new JLabel("Feedback de Flashcards");
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 28));
+
+        // Agrega el título al panel.
+        add(titulo);
+        add(Box.createVerticalStrut(12));
+
+        add(porcentaje);
+        add(Box.createVerticalStrut(10));
+
+        add(mensaje);
+        add(Box.createVerticalStrut(20));
+
+        // Crea el botón para regresar.
         JButton volver = new JButton("Volver");
-                volver.setMaximumSize(new Dimension(200, 35));
-                volver.addActionListener(e -> gestor.mostrarEstudiante());
-                add(volver);
-        for (Component componente : getComponents()) {
-        ((JComponent) componente).setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        volver.addActionListener(e -> gestor.mostrarFeedback());
+        add(volver);
+}
+public void actualizarDesempeno(double desempeno) {
+
+    // Muestra el porcentaje recibido.
+    porcentaje.setText("Desempeño: " + desempeno + "%");
+
+    if (desempeno < 61) {
+        mensaje.setText("Continúa practicando el balanceo para mejorar tu desempeño.");
+    } else {
+    
+        mensaje.setText("¡Buen trabajo! Tu desempeño en balanceo es positivo. ¡Sigue así!");
     }
 }
 }
