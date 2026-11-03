@@ -13,6 +13,12 @@ import login.BancoEjercicios;
 import login.Usuario;
 import login.Usuariodao;
 
+// Permite reconocer errores al consultar la base de datos.
+import java.sql.SQLException;
+
+// Permite acceder a las consultas de resultados.
+import login.Resultadodao;
+
 // Administra la ventana principal y decide qué panel está visible (CardLayout).
 // También guarda el usuario que inició sesión y pinta el fondo general de la app.
 public class GestorVentanas extends JFrame {
@@ -43,6 +49,11 @@ public class GestorVentanas extends JFrame {
     private final PanelProfesor panelProfesor;
     private final PanelFeedback panelFeedback;
     private final PanelNomenclatura panelNomenclatura;
+        // Guarda el panel para actualizarlo antes de mostrarlo.
+    private final PanelFeedbackBalanceo panelFeedbackBalanceo;
+
+    // Crea el objeto que permite consultar los resultados guardados.
+    private final Resultadodao resultadodao = new Resultadodao();
 
     // Imagen de fondo común a todas las pantallas
     private ImageIcon imagenFondo;
@@ -62,6 +73,8 @@ public class GestorVentanas extends JFrame {
         panelProfesor = new PanelProfesor(this);
         panelFeedback = new PanelFeedback(this);
         panelNomenclatura = new PanelNomenclatura(this);
+        // Crea el panel que mostrará el desempeño de balanceo.
+        panelFeedbackBalanceo = new PanelFeedbackBalanceo(this);
 
         // Se registran todas las pantallas en el contenedor
         contenedor.add(new PanelInicio(this), INICIO);
@@ -75,8 +88,8 @@ public class GestorVentanas extends JFrame {
         contenedor.add(new PanelBuscarAlumno(this), BUSCARALUMNO);
         contenedor.add(panelFeedback, FEEDBACK);
         contenedor.add(new PanelFeedbackFlashcards(this), FEEDBACKFLASHCARDS);
-        contenedor.add(new PanelFeedbackBalanceo(this), FEEDBACKBALANCEO);
-
+        // Registra el mismo panel que recibirá el porcentaje consultado.
+        contenedor.add(panelFeedbackBalanceo, FEEDBACKBALANCEO);
         // Carga la imagen de fondo (si no existe, simplemente no se dibuja)
         URL rutaFondo = getClass().getResource("/vista/imagenes/fondo.png");
         if (rutaFondo != null) {
@@ -187,10 +200,51 @@ public class GestorVentanas extends JFrame {
         tarjetas.show(contenedor, FEEDBACKFLASHCARDS);
     }
 
-    public void mostrarFeedbackBalanceo() {
-        tarjetas.show(contenedor, FEEDBACKBALANCEO);
+    // Consulta el desempeño y muestra el feedback del estudiante actual.
+public void mostrarFeedbackBalanceo() {
+
+    // Comprueba que exista un usuario identificado en la sesión.
+    if (nombreUsuarioActual == null
+            || nombreUsuarioActual.trim().isEmpty()) {
+
+        // Abre el inicio de sesión si no hay un usuario identificado.
+        mostrarLogin();
+
+        // Termina el método para no consultar sin identificar al estudiante.
+        return;
     }
 
+    // Intenta consultar el desempeño en la base de datos.
+    try {
+
+        // Obtiene el porcentaje del usuario que inició sesión.
+        // Recibe null si ese usuario todavía no tiene respuestas.
+        Double desempeno =
+                resultadodao.consultarDesempenoBalanceo(nombreUsuarioActual);
+
+        // Comprueba si todavía no hay resultados registrados.
+        if (desempeno == null) {
+
+            // Muestra el aviso de ausencia de resultados.
+            panelFeedbackBalanceo.mostrarSinResultados();
+
+        } else {
+
+            // Envía el porcentaje al panel.
+            // El panel muestra el porcentaje y el mensaje según el 61%.
+            panelFeedbackBalanceo.actualizarDesempeno(desempeno);
+        }
+
+    // Recibe los errores que puedan ocurrir durante la consulta.
+    } catch (SQLException e) {
+
+        // Muestra el aviso de error sin presentar un porcentaje incorrecto.
+        panelFeedbackBalanceo.mostrarErrorConsulta();
+    }
+
+    // Abre la pantalla después de actualizar su contenido.
+    tarjetas.show(contenedor, FEEDBACKBALANCEO);
+}
     // ---- Acceso a los datos desde los paneles ----
 
     public Usuariodao getUsuariodao() {
