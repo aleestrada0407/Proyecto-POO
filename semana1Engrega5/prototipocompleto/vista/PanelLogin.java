@@ -90,6 +90,7 @@ public class PanelLogin extends JPanel {
             // 2. Comprobar las credenciales
             Usuario usuario = gestor.getUsuariodao()
                     .buscarPorNombreUsuario(nombreUsuario);
+                    gestor.setNombreUsuarioActual(usuario.getNombreUsuario());
 
             // 3. Verificar si el usuario existe
             if (usuario == null || !usuario.verificarContrasena(new String(clave))) {
@@ -115,6 +116,7 @@ public class PanelLogin extends JPanel {
             campoClave.setText("");
         }
     }
+    
 
 // private void procesarLoginProf() {
 //         String usuario = campoUsuario.getText().trim();
@@ -139,7 +141,7 @@ public class PanelLogin extends JPanel {
 protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         int x = getWidth() - IMAGEN_ANCHO - IMAGEN_MARGEN_DERECHO;
-        if (logo != null && logo.getIconWidth() > 0) {
+        if (logo != null) {
             g.drawImage(logo.getImage(), x, IMAGEN_Y, IMAGEN_ANCHO, IMAGEN_ALTO, this);
         } else {
             g.setColor(Color.DARK_GRAY);

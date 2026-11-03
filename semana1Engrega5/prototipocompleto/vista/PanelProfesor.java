@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.net.URL;
+import login.Usuario;
 
 
 
@@ -22,13 +23,13 @@ public class PanelProfesor extends JPanel {
     private static final int IMAGEN_ALTO = 320;
     private static final int IMAGEN_MARGEN_DERECHO = 50;
     private static final int IMAGEN_Y = 90;
+    private final JLabel titulo = new JLabel("tetxo");
     private ImageIcon logo;
     private ImageIcon fondoEjercicio;
 
     public PanelProfesor(GestorVentanas gestor) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(35, 110, 25, 30));
-        JLabel titulo = new JLabel("Bienvenido, NOMBRE DEL PROFESOR");
         //aquí también se debe buscar el nombre
         //espacio entre los botones para dejar un poco de distancia
         add(Box.createVerticalStrut(12));
@@ -38,10 +39,12 @@ public class PanelProfesor extends JPanel {
 add(Box.createVerticalStrut(12));
         //se agregarán las imagenes después cuando se profundice en el diseño
            URL imagen = getClass().getResource("/vista/imagenes/profesor.png");
-    logo = new ImageIcon(imagen);
+           if (imagen != null) {
+    logo = new ImageIcon(imagen);}
 URL rutaFondo = getClass().getResource("/vista/imagenes/fondo1.png");
+if (rutaFondo!=null){
     fondoEjercicio = new ImageIcon(rutaFondo);
-
+}
 
         JButton entrar = new JButton("Consultar alumno");
         entrar.setMaximumSize(new Dimension(200, 35));
@@ -57,6 +60,10 @@ URL rutaFondo = getClass().getResource("/vista/imagenes/fondo1.png");
         for (Component componente : getComponents()) {
         ((JComponent) componente).setAlignmentX(Component.LEFT_ALIGNMENT);
     }
+}
+   //método para mostrar el nombre de usuario.
+    public void mostrarDatos(Usuario usuario) {
+    titulo.setText("Buenas tardes " + usuario.getNombre() + ".");
 }
 @Override
 protected void paintComponent(Graphics g) {

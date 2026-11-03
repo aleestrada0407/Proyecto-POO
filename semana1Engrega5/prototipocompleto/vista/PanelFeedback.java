@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import login.Usuario;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,21 +19,24 @@ import javax.swing.JPanel;
 
         import java.net.URL;
 public class PanelFeedback extends JPanel {
+    private final JLabel titulo = new JLabel("Resumen:");
+    private final JLabel etiquetaNombre = new JLabel();
+private final JLabel etiquetaSeccion = new JLabel();
+private final JLabel etiquetaNombreUsuario = new JLabel();
     public PanelFeedback(GestorVentanas gestor) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(35, 110, 25, 30));
-        JLabel titulo = new JLabel("Resumen para PRIMER NOMBRE:"); 
+
         //se debe de obtener el nombre del estudiante para mostrar aquí
         
         //espacio entre los botones para dejar un poco de distancia
         add(Box.createVerticalStrut(12));
         titulo.setFont(new Font("SansSerif", Font.BOLD, 30));
         add(titulo);
-        add(new JLabel("Nombre completo: ASDAFASA"));
-        add(new JLabel("Nombre de usuario: ADSADAFAS"));
-        add(new JLabel("Sección: ADSASDAS"));
-        add(new JLabel("Desempeño:"));
 add(Box.createVerticalStrut(12));
+        add(etiquetaNombre);
+        add(etiquetaSeccion);
+        add(etiquetaNombreUsuario);
 
         JButton flashcards = new JButton("Desempeño en Flashcards");
         flashcards.setMaximumSize(new Dimension(200, 35));
@@ -48,6 +52,12 @@ add(Box.createVerticalStrut(12));
         volver.setMaximumSize(new Dimension(200, 35));
         volver.addActionListener(e -> gestor.mostrarEstudiante());
         add(volver);
+    }
+        public void mostrarDatos(Usuario usuario) {
+    titulo.setText("Resumen para " + usuario.getNombre() + ":");
+    etiquetaNombre.setText("Nombre: " + usuario.getNombre());
+    etiquetaNombreUsuario.setText("Nombre de usuario: " +usuario.getNombreUsuario());
+    etiquetaSeccion.setText("Sección: " + usuario.getSeccion());
 
 
 
