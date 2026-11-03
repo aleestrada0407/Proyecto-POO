@@ -1,5 +1,5 @@
 package vista;
-
+import java.awt.Graphics;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JComponent;
@@ -17,6 +17,7 @@ import java.net.URL;
 
 //Pantalla de login que muestra información y ofrece inicio de sesión y registro
 public class PanelBuscarAlumno extends JPanel {
+    private ImageIcon fondo;
     private final JComboBox<String> campoTipo = new JComboBox<>();
     public PanelBuscarAlumno(GestorVentanas gestor) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -33,10 +34,9 @@ public class PanelBuscarAlumno extends JPanel {
         add(campoTipo);
         add(Box.createVerticalStrut(12));
         //se agregarán las imagenes después cuando se profundice en el diseño
-        URL imagen = getClass().getResource("/imagenes/logo.png");
-        if (imagen != null) {
-            add(new JLabel(new ImageIcon(imagen)));
-        }
+         URL imagen = getClass().getResource("imagenes/fondo1.png");
+            fondo = new ImageIcon(imagen);
+
 
         
         JButton volver = new JButton("Volver");
@@ -49,4 +49,11 @@ public class PanelBuscarAlumno extends JPanel {
         ((JComponent) componente).setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 }
+@Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (fondo != null) {
+            g.drawImage(fondo.getImage(), 0, 0, getWidth(), getHeight(), this);
+        }
+    }
 }

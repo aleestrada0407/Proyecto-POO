@@ -1,5 +1,5 @@
 package vista;
-
+import java.awt.Graphics;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JComponent;
@@ -11,11 +11,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import java.net.URL;
+
+
+
 
 //Pantalla de login que muestra información y ofrece inicio de sesión y registro
 public class PanelProfesor extends JPanel {
+    private static final int IMAGEN_ANCHO = 360;
+    private static final int IMAGEN_ALTO = 320;
+    private static final int IMAGEN_MARGEN_DERECHO = 50;
+    private static final int IMAGEN_Y = 90;
+    private ImageIcon logo;
+    private ImageIcon fondoEjercicio;
+
     public PanelProfesor(GestorVentanas gestor) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(35, 110, 25, 30));
@@ -28,10 +37,11 @@ public class PanelProfesor extends JPanel {
         add(new JLabel("Seleccione qué desea hacer:"));
 add(Box.createVerticalStrut(12));
         //se agregarán las imagenes después cuando se profundice en el diseño
-        URL imagen = getClass().getResource("/imagenes/logo.png");
-        if (imagen != null) {
-            add(new JLabel(new ImageIcon(imagen)));
-        }
+           URL imagen = getClass().getResource("/vista/imagenes/profesor.png");
+    logo = new ImageIcon(imagen);
+URL rutaFondo = getClass().getResource("/vista/imagenes/fondo1.png");
+    fondoEjercicio = new ImageIcon(rutaFondo);
+
 
         JButton entrar = new JButton("Consultar alumno");
         entrar.setMaximumSize(new Dimension(200, 35));
@@ -48,4 +58,18 @@ add(Box.createVerticalStrut(12));
         ((JComponent) componente).setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 }
-}
+@Override
+protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+
+    if (fondoEjercicio != null) {
+        g.drawImage(fondoEjercicio.getImage(),
+                0, 0, getWidth(), getHeight(), this);
+    }
+
+    if (logo != null && logo.getIconWidth() > 0) {
+        int x = getWidth() - IMAGEN_ANCHO - IMAGEN_MARGEN_DERECHO;
+        g.drawImage(logo.getImage(),
+                x, IMAGEN_Y, IMAGEN_ANCHO, IMAGEN_ALTO, this);
+    }
+}}

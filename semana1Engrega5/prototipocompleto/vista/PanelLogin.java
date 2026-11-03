@@ -18,8 +18,18 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+        import javax.swing.ImageIcon;
+
+        import java.awt.Graphics;
+        import java.awt.Color;
+
 
 public class PanelLogin extends JPanel {
+             private static final int IMAGEN_ANCHO = 480;
+            private static final int IMAGEN_ALTO = 420;
+            private static final int IMAGEN_MARGEN_DERECHO = 50;
+            private static final int IMAGEN_Y = 60;
+            private ImageIcon logo;
     private final GestorVentanas gestor;
     private final JTextField campoUsuario = new JTextField(20);
     private final JPasswordField campoClave = new JPasswordField(20);
@@ -106,26 +116,35 @@ public class PanelLogin extends JPanel {
         }
     }
 
-private void procesarLoginProf() {
-        String usuario = campoUsuario.getText().trim();
-        char[] clave = campoClave.getPassword();
-        try {
-            if (usuario.isEmpty() || clave.length == 0) {
-                JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incompletos.");
-                return;
-            }
+// private void procesarLoginProf() {
+//         String usuario = campoUsuario.getText().trim();
+//         char[] clave = campoClave.getPassword();
+//         try {
+//             if (usuario.isEmpty() || clave.length == 0) {
+//                 JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incompletos.");
+//                 return;
+//             }
 
-            // aquí se debe conectar con la base de datos para hacer el inicio se sesión y comprobar los datos, por ahora siempre avanza a la pestaña de ejercicios
-            JOptionPane.showMessageDialog(this,
-                    "Inicio de sesión exitoso.");//Se avanza de clase pero no se 
-            gestor.mostrarProfesor();
-        } finally {
-            //estas lineas limpian los espacios para contraseña
-            Arrays.fill(clave, '\0');
-            campoClave.setText("");
+//             // aquí se debe conectar con la base de datos para hacer el inicio se sesión y comprobar los datos, por ahora siempre avanza a la pestaña de ejercicios
+//             JOptionPane.showMessageDialog(this,
+//                     "Inicio de sesión exitoso.");//Se avanza de clase pero no se 
+//             gestor.mostrarProfesor();
+//         } finally {
+//             Arrays.fill(clave, '\0');
+//             campoClave.setText("");
+//         }
+//     }
+
+
+protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        int x = getWidth() - IMAGEN_ANCHO - IMAGEN_MARGEN_DERECHO;
+        if (logo != null && logo.getIconWidth() > 0) {
+            g.drawImage(logo.getImage(), x, IMAGEN_Y, IMAGEN_ANCHO, IMAGEN_ALTO, this);
+        } else {
+            g.setColor(Color.DARK_GRAY);
+
         }
     }
-
-
 }
 

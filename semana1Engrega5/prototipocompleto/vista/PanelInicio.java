@@ -2,6 +2,8 @@ package vista;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Color;
 import javax.swing.JComponent;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
@@ -11,15 +13,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import java.net.URL;
 
 //Pantalla de login que muestra información y ofrece inicio de sesión y registro
 public class PanelInicio extends JPanel {
+    private static final int IMAGEN_ANCHO = 480;
+    private static final int IMAGEN_ALTO = 420;
+    private static final int IMAGEN_MARGEN_DERECHO = 50;
+    private static final int IMAGEN_Y = 60;
+    private ImageIcon logo;
+
     public PanelInicio(GestorVentanas gestor) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(35, 110, 25, 30));
-        JLabel titulo = new JLabel("Bienvenido.");
+        JLabel titulo = new JLabel("<html>Bienvenido a <font color='#3c24c5'>QUIMIX</font>.</html>");
         //espacio entre los botones para dejar un poco de distancia
         add(Box.createVerticalStrut(12));
         titulo.setFont(new Font("SansSerif", Font.BOLD, 30));
@@ -27,10 +34,12 @@ public class PanelInicio extends JPanel {
         add(new JLabel("Selecciona qué deseas hacer:"));
         add(Box.createVerticalStrut(12));
         //se agregarán las imagenes después cuando se profundice en el diseño
-        URL imagen = getClass().getResource("/imagenes/logo.png");
-        if (imagen != null) {
-            add(new JLabel(new ImageIcon(imagen)));
-        }
+        //se agregarán las imagenes después cuando se profundice en el diseño
+        URL imagen = getClass().getResource("imagenes/logo.png");
+
+            logo = new ImageIcon(imagen);
+
+        
 
         JButton entrar = new JButton("Iniciar sesión");
         entrar.setMaximumSize(new Dimension(200, 35));
@@ -46,5 +55,16 @@ public class PanelInicio extends JPanel {
         for (Component componente : getComponents()) {
         ((JComponent) componente).setAlignmentX(Component.LEFT_ALIGNMENT);
     }
-}
+    }
+    @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            int x = getWidth() - IMAGEN_ANCHO - IMAGEN_MARGEN_DERECHO;
+            if (logo != null && logo.getIconWidth() > 0) {
+                g.drawImage(logo.getImage(), x, IMAGEN_Y, IMAGEN_ANCHO, IMAGEN_ALTO, this);
+            } else {
+                g.setColor(Color.DARK_GRAY);
+            }
+        }
+
 }
