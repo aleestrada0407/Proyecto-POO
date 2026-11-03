@@ -56,10 +56,19 @@ public class PanelFeedBackBalanceo extends JPanel {
         // Agrega el botón al panel.
         add(volver);
 }
- public void actualizarDesempeno(double desempeno) {
+ // Recibe el porcentaje y actualiza el contenido del panel.
+public void actualizarDesempeno(double desempeno) {
 
-        // Reemplaza el texto provisional por el porcentaje recibido.
-        porcentaje.setText("Desempeño: " + desempeno + "%");
+    // Muestra el porcentaje recibido.
+    porcentaje.setText("Desempeño: " + desempeno + "%");
+
+    // Si el desempeño es menor al 61%, muestra un mensaje genérico.
+    if (desempeno < 61) {
+        mensaje.setText("Continúa practicando el balanceo para mejorar tu desempeño.");
+    } else {
+        // Si es mayor o igual al 61%, muestra un mensaje positivo.
+        mensaje.setText("¡Buen trabajo! Tu desempeño en balanceo es positivo. ¡Sigue así!");
     }
+}
 }
 
