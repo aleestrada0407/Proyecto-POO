@@ -21,24 +21,28 @@ public class GestorVentanas extends JFrame {
     private final JPanel contenedor = new JPanel(tarjetas);
 
     private final Usuariodao usuariodao = new Usuariodao();
-   
+
     private final BancoEjercicios banco = new BancoEjercicios();
 
+
+    private PanelNomenclatura panelNomenclatura;
+
     public GestorVentanas() {
-        super("titulo de la ventana"); //modificar nombre luego. crea la ventana princpal para añadir los paneles
+        super("titulo de la ventana");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(960, 540);
         setMinimumSize(getSize());
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-     
+        panelNomenclatura = new PanelNomenclatura(this);
+
         contenedor.add(new PanelInicio(this), INICIO);
         contenedor.add(new PanelLogin(this), LOGIN);
         contenedor.add(new PanelRegistro(this), REGISTRO);
         contenedor.add(new PanelEstudiante(this), ESTUDIANTE);
         contenedor.add(new PanelEjercicio(this), EJERCICIO);
-        contenedor.add(new PanelNomenclatura(this), NOMENCLATURA);
+        contenedor.add(panelNomenclatura, NOMENCLATURA);
         contenedor.add(new PanelProfesor(this), PROFESOR);
         contenedor.add(new PanelBuscarAlumno(this), BUSCARALUMNO);
 
@@ -70,6 +74,7 @@ public class GestorVentanas extends JFrame {
     }
 
     public void mostrarNomenclatura(){
+        panelNomenclatura.iniciar(); 
         tarjetas.show(contenedor, NOMENCLATURA);
     }
 
