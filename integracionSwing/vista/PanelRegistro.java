@@ -91,7 +91,7 @@ public class PanelRegistro extends JPanel {
         char[] confirmacion = campoConfirmacion.getPassword();
 
         try {
-            // 1. Comprobar que los campos no estén vacíos
+            // Comprobar que los campos no estén vacíos
             if (nombre.isEmpty() || seccion.isEmpty()
                     || nombreUsuario.isEmpty() || clave.length == 0
                     || confirmacion.length == 0) {
@@ -101,14 +101,14 @@ public class PanelRegistro extends JPanel {
                 return;
             }
 
-            // 2. Verificar que las contraseñas coincidan
+            // Verificar que las contraseñas coincidan
             if (!Arrays.equals(clave, confirmacion)) {
                 JOptionPane.showMessageDialog(this,
                         "Las contraseñas no coinciden.");
                 return;
             }
 
-            // 3. Crear el usuario según su tipo
+            // Crear el usuario según su tipo
             Usuario nuevoUsuario;
 
             if ("Estudiante".equals(tipo)) {
@@ -125,11 +125,11 @@ public class PanelRegistro extends JPanel {
                 return;
             }
 
-            // 4. Registrar el usuario con la lógica existente
+            // Registrar el usuario con la lógica existente
             boolean registrado = gestor.getSistemaLogin()
                     .registrarUsuario(nuevoUsuario);
 
-            // 5. Mostrar el resultado
+            // Mostrar el resultado
             if (registrado) {
                 JOptionPane.showMessageDialog(this,
                         "¡Cuenta registrada correctamente!");

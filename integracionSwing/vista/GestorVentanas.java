@@ -1,4 +1,5 @@
 package vista;
+import login.Usuario;
 import login.SistemaLogin;
 
 import java.awt.BorderLayout;
