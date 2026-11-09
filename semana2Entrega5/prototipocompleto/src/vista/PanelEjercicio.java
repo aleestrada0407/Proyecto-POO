@@ -28,6 +28,12 @@ public class PanelEjercicio extends JPanel {
     private ArrayList<JTextField> camposReactivos; // Alamacenara los campos de las respuestas que ponga el usuario 
     private ArrayList<JTextField> camposProductos;
 
+    private JLabel lblEnunciado;
+    private JLabel lblEcuacion;
+    private JPanel panelReactivos;
+    private JPanel panelProductos;
+    private JButton botonSiguiente;
+
     
 
     public PanelEjercicio(GestorVentanas gestor) {
@@ -46,9 +52,9 @@ public class PanelEjercicio extends JPanel {
 
 
         ejercicioActual = banco.obtenerSiguiente();
-        JLabel lblEnunciado = new JLabel(ejercicioActual.getEnunciado());
-        add(lblEnunciado);                                                      // obtienen las instrucciones y ejercicios 
-        JLabel lblEcuacion = new JLabel(ejercicioActual.armarEcuacion());
+        lblEnunciado = new JLabel(ejercicioActual.getEnunciado());
+        add(lblEnunciado);
+        lblEcuacion = new JLabel(ejercicioActual.armarEcuacion());
         add(lblEcuacion);
 
         camposReactivos = new ArrayList<>();
@@ -56,7 +62,7 @@ public class PanelEjercicio extends JPanel {
 
         add(Box.createVerticalStrut(15));
 
-        JPanel panelReactivos = new JPanel();
+        panelReactivos = new JPanel();
         panelReactivos.setOpaque(false);
 
         String[] reactivos = ejercicioActual.getFormulasReactivos();
@@ -73,7 +79,7 @@ public class PanelEjercicio extends JPanel {
 
         add(panelReactivos);
 
-        JPanel panelProductos = new JPanel();
+        panelProductos = new JPanel();
         panelProductos.setOpaque(false);
 
         String[] productos = ejercicioActual.getFormulasProductos();
@@ -94,6 +100,12 @@ public class PanelEjercicio extends JPanel {
         comprobar.addActionListener(e -> comprobarRespuesta());
         add(comprobar);
 
+        // Botón para avanzar al siguiente ejercicio
+        botonSiguiente = new JButton("Siguiente ejercicio");
+        botonSiguiente.setEnabled(false);
+        botonSiguiente.addActionListener(e -> mostrarSiguienteEjercicio());
+        add(botonSiguiente);
+
         // Fondo de la pantalla (se dibuja en paintComponent)
         URL rutaFondo = getClass().getResource("/vista/imagenes/fondo1.png");
         if (rutaFondo != null) {
@@ -110,6 +122,71 @@ public class PanelEjercicio extends JPanel {
             ((JComponent) componente).setAlignmentX(Component.LEFT_ALIGNMENT);
         }
     }
+
+    private void mostrarSiguienteEjercicio() {
+
+        // Comprobamos si todavía quedan ejercicios
+        if (!banco.haySiguiente()) {
+            JOptionPane.showMessageDialog(this,
+                    "¡Has llegado al final de los ejercicios!");
+            botonSiguiente.setEnabled(false);
+            return;
+        }
+
+        // Obtenemos el siguiente ejercicio
+        ejercicioActual = banco.obtenerSiguiente();
+
+        // Actualizamos los textos
+        lblEnunciado.setText(ejercicioActual.getEnunciado());
+        lblEcuacion.setText(ejercicioActual.armarEcuacion());
+
+        // Eliminamos los campos del ejercicio anterior
+        panelReactivos.removeAll();
+        panelProductos.removeAll();
+
+        // Limpiamos las listas de campos
+        camposReactivos.clear();
+        camposProductos.clear();
+
+        // Creamos los campos para los nuevos reactivos
+        for (String formula : ejercicioActual.getFormulasReactivos()) {
+
+            JTextField campo = new JTextField(3);
+            campo.setMaximumSize(new Dimension(55, 30));
+
+            panelReactivos.add(campo);
+            panelReactivos.add(new JLabel(formula));
+
+            camposReactivos.add(campo);
+        }
+
+        // Creamos los campos para los nuevos productos
+        for (String formula : ejercicioActual.getFormulasProductos()) {
+
+            JTextField campo = new JTextField(3);
+            campo.setMaximumSize(new Dimension(55, 30));
+
+            panelProductos.add(campo);
+            panelProductos.add(new JLabel(formula));
+
+            camposProductos.add(campo);
+        }
+
+        // Actualizamos la presentación gráfica
+        panelReactivos.revalidate();
+        panelReactivos.repaint();
+
+        panelProductos.revalidate();
+        panelProductos.repaint();
+
+        revalidate();
+        repaint();
+
+        // Deshabilitamos el botón hasta comprobar otra respuesta
+        botonSiguiente.setEnabled(false);
+    }
+
+
 
     private void comprobarRespuesta() {
 
@@ -152,6 +229,9 @@ public class PanelEjercicio extends JPanel {
             JOptionPane.showMessageDialog(this,
                     "La ecuación no está balanceada. Intenta nuevamente.");
         }
+
+// Permitimos avanzar después de comprobar una respuesta válida
+botonSiguiente.setEnabled(true);
 
     } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(this,
