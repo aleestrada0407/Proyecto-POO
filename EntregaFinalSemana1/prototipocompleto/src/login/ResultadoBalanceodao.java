@@ -82,24 +82,19 @@ public class ResultadoBalanceodao {
         }
     }
 
+    // Calcula el porcentaje de balanceo del estudiante indicado.
+    // Lo usa GestorResultados.desempenoBalanceo().
+    // Antes repetía la misma consulta SQL que consultarDesempenoBalanceo(),
+    // así que si se corregía una había que acordarse de corregir la otra.
+    // Ahora solo llama a ese método, para que exista un único cálculo
+    // y los dos siempre devuelvan el mismo porcentaje.
     public Double calcularDesempeno(String nombreUsuario) throws SQLException {
 
-    String sql = "SELECT COUNT(*) AS total, COALESCE(SUM(r.correcto), 0) AS aciertos " + "FROM resultados r JOIN usuarios u ON u.id = r.usuario_id " + "WHERE u.nombre_usuario = ?";
-
-    try (Connection conexion = BaseDatos.conectar(); PreparedStatement consulta = conexion.prepareStatement(sql)) {
-
-        consulta.setString(1, nombreUsuario);
-
-        try (ResultSet fila = consulta.executeQuery()) {
-            fila.next();
-            int total = fila.getInt("total");
-            if (total == 0) {
-                return null;
-            }
-                return fila.getInt("aciertos") * 100.0 / total;
-            }
-        }
+        // Reutiliza la consulta completa: devuelve null si no hay respuestas
+        // y lanza SQLException si la consulta falla, igual que antes.
+        return consultarDesempenoBalanceo(nombreUsuario);
     }
+
         // Consulta el porcentaje de balanceo del estudiante indicado.
     // Double permite devolver null cuando todavía no hay respuestas.
     // SQLException comunica los errores de la consulta a quien llama al método.
