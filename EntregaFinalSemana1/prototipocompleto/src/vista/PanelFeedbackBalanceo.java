@@ -9,6 +9,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+// Permite indicar el formato de números (punto como separador decimal).
+import java.util.Locale;
+
 // Hereda de JPanel para funcionar como una pantalla del programa.
 public class PanelFeedbackBalanceo extends JPanel {
     // Etiqueta donde después se mostrará el porcentaje del estudiante.
@@ -51,10 +54,21 @@ public class PanelFeedbackBalanceo extends JPanel {
 
     // Recibe el porcentaje y actualiza el contenido del panel.
     public void actualizarDesempeno(double desempeno) {
-        // Muestra el porcentaje recibido.
-        porcentaje.setText("Desempeño: " + desempeno + "%");
+        // Redondea el porcentaje a un decimal para que se lea mejor.
+        // Antes se mostraba completo, por ejemplo "66.66666666666667%".
+        // Se multiplica por 10, se redondea al entero más cercano y se divide entre 10.
+        double desempenoRedondeado = Math.round(desempeno * 10) / 10.0;
 
-        if (desempeno < 61) {
+        // Convierte el número a texto con un decimal.
+        // Locale.US asegura que el decimal use punto (66.7) en cualquier computadora.
+        String porcentajeTexto = String.format(Locale.US, "%.1f", desempenoRedondeado);
+
+        // Muestra el porcentaje ya redondeado, por ejemplo "Desempeño: 66.7%".
+        porcentaje.setText("Desempeño: " + porcentajeTexto + "%");
+
+        // Se compara con el valor redondeado para que el mensaje coincida con lo que se ve.
+        // Así, si en pantalla aparece "61.0%", el mensaje también será el positivo.
+        if (desempenoRedondeado < 61) {
             // Menor al 61%: mensaje para seguir practicando.
             mensaje.setText("Continúa practicando el balanceo para mejorar tu desempeño.");
         } else {
