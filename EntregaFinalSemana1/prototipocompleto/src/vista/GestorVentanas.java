@@ -57,6 +57,8 @@ public class GestorVentanas extends JFrame {
     // Guarda el panel de flashcards para actualizarlo antes de mostrarlo.
     // Antes se creaba directamente al registrarlo y no se podía actualizar después.
     private final PanelFeedbackFlashcards panelFeedbackFlashcards;
+    // Guarda el panel de informe de alumnos para recargar su lista de estudiantes al mostrarlo.
+    private final PanelBuscarAlumno panelBuscarAlumno;
 
     // Crea el objeto que permite consultar los resultados guardados.
     private final ResultadoBalanceodao resultadoBalanceodao = new ResultadoBalanceodao();
@@ -87,6 +89,8 @@ public class GestorVentanas extends JFrame {
         panelFeedbackBalanceo = new PanelFeedbackBalanceo(this);
         // Crea el panel que mostrará el desempeño de flashcards (nomenclatura).
         panelFeedbackFlashcards = new PanelFeedbackFlashcards(this);
+        // Crea el panel donde el profesor elige a un estudiante.
+        panelBuscarAlumno = new PanelBuscarAlumno(this);
 
         // Se registran todas las pantallas en el contenedor
         contenedor.add(new PanelInicio(this), INICIO);
@@ -97,7 +101,8 @@ public class GestorVentanas extends JFrame {
         contenedor.add(new PanelEjercicio(this), EJERCICIO);
         contenedor.add(panelNomenclatura, NOMENCLATURA);
         contenedor.add(panelProfesor, PROFESOR);
-        contenedor.add(new PanelBuscarAlumno(this), BUSCARALUMNO);
+        // Registra el mismo panel guardado arriba para poder actualizarlo después.
+        contenedor.add(panelBuscarAlumno, BUSCARALUMNO);
         contenedor.add(panelFeedback, FEEDBACK);
         // Registra el mismo panel de flashcards que recibirá el porcentaje consultado.
         contenedor.add(panelFeedbackFlashcards, FEEDBACKFLASHCARDS);
@@ -197,6 +202,8 @@ public class GestorVentanas extends JFrame {
     }
 
     public void mostrarBuscarAlumno() {
+        // Antes de mostrar la pantalla se carga la lista de estudiantes desde la base de datos.
+        panelBuscarAlumno.cargarEstudiantes();
         tarjetas.show(contenedor, BUSCARALUMNO);
     }
 
