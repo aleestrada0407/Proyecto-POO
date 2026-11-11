@@ -13,7 +13,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+// Permite reconocer errores al consultar la base de datos.
+import java.sql.SQLException;
+
+// Permite indicar el formato de números (punto como separador decimal).
+import java.util.Locale;
 
 // Permite guardar la lista de estudiantes que llega de la base de datos.
 import java.util.ArrayList;
@@ -34,7 +41,7 @@ public class PanelBuscarAlumno extends JPanel {
     private final JComboBox<Usuario> campoEstudiante = new JComboBox<>();
 
     // Botón que se habilita al elegir un estudiante.
-    // Servirá para buscar su rendimiento en la base de datos (se implementa en el siguiente commit).
+    // Busca su rendimiento en la base de datos y lo muestra en un popup.
     private final JButton buscarRendimiento = new JButton("Buscar rendimiento");
 
     public PanelBuscarAlumno(GestorVentanas gestor) {
@@ -69,7 +76,8 @@ public class PanelBuscarAlumno extends JPanel {
         // Empieza deshabilitado porque todavía no se ha elegido ningún estudiante.
         buscarRendimiento.setMaximumSize(new Dimension(200, 35));
         buscarRendimiento.setEnabled(false);
-        // Pendiente: la búsqueda del rendimiento se agrega en el siguiente commit.
+        // Al hacer clic se busca el rendimiento del estudiante elegido y se muestra en un popup.
+        buscarRendimiento.addActionListener(e -> mostrarRendimiento());
         add(buscarRendimiento);
 
         // Deja un pequeño espacio entre "Buscar rendimiento" y "Volver".
@@ -112,6 +120,68 @@ public class PanelBuscarAlumno extends JPanel {
     // Habilita "Buscar rendimiento" solo cuando hay un estudiante seleccionado.
     private void actualizarBoton() {
         buscarRendimiento.setEnabled(campoEstudiante.getSelectedItem() != null);
+    }
+
+    // Busca en la base de datos los resultados del estudiante seleccionado
+    // y los muestra en un popup (ventana emergente) con este formato:
+    //   Estudiante: NOMBRE
+    //   Sección: SECCION
+    //   Completados N ejercicios de balanceo, con porcentaje de acierto de P%
+    //   Completados N ejercicios de flashcards, con porcentaje de acierto de P%
+    private void mostrarRendimiento() {
+
+        // Obtiene el estudiante elegido en la lista desplegable.
+        Usuario estudiante = (Usuario) campoEstudiante.getSelectedItem();
+
+        // Si no hay estudiante elegido no se consulta nada.
+        if (estudiante == null) {
+            return;
+        }
+
+        try {
+            // Cuenta los ejercicios de balanceo: conteo[0] son aciertos y conteo[1] el total.
+            int[] balanceo = gestor.getResultadoBalanceodao()
+                    .consultarConteoBalanceo(estudiante.getNombreUsuario());
+
+            // Cuenta las flashcards de nomenclatura de la misma forma.
+            int[] flashcards = gestor.getResultadoNomenclaturadao()
+                    .consultarConteoNomenclatura(estudiante.getNombreUsuario());
+
+            // Arma el texto del resumen línea por línea ("\n" es un salto de línea).
+            String resumen =
+                    "Estudiante: " + estudiante.getNombre() + "\n"
+                    + "Sección: " + estudiante.getSeccion() + "\n"
+                    + "Completados " + balanceo[1] + " ejercicios de balanceo, "
+                    + "con porcentaje de acierto de " + calcularPorcentaje(balanceo[0], balanceo[1]) + "\n"
+                    + "Completados " + flashcards[1] + " ejercicios de flashcards, "
+                    + "con porcentaje de acierto de " + calcularPorcentaje(flashcards[0], flashcards[1]);
+
+            // Muestra el popup con el resumen encima de esta pantalla.
+            JOptionPane.showMessageDialog(this, resumen,
+                    "Rendimiento del estudiante", JOptionPane.INFORMATION_MESSAGE);
+
+        // Si la base de datos falla se avisa en lugar de mostrar datos incorrectos.
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "No se pudo consultar el rendimiento del estudiante. Inténtalo de nuevo.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Convierte aciertos y total en un porcentaje con un decimal, por ejemplo "66.7%".
+    // Si el estudiante no tiene ejercicios completados devuelve "0.0%" para no dividir entre cero.
+    private String calcularPorcentaje(int aciertos, int total) {
+
+        // Sin ejercicios no hay porcentaje que calcular.
+        if (total == 0) {
+            return "0.0%";
+        }
+
+        // Calcula el porcentaje usando decimales.
+        double porcentaje = aciertos * 100.0 / total;
+
+        // Locale.US asegura que el decimal use punto (66.7) en cualquier computadora.
+        return String.format(Locale.US, "%.1f", porcentaje) + "%";
     }
 
     // Pinta el fondo estirado a todo el panel
