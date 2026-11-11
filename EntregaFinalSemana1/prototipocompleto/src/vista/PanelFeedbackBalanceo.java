@@ -20,6 +20,9 @@ public class PanelFeedbackBalanceo extends JPanel {
     // Etiqueta donde aparecerá el mensaje según el desempeño.
     private final JLabel mensaje = new JLabel("Aquí aparecerá tu retroalimentación.");
 
+    // Etiqueta que muestra cuántos ejercicios acertó de los que respondió.
+    private final JLabel ejercicios = new JLabel("Ejercicios correctos: pendiente");
+
     // El constructor prepara los elementos del panel.
     // Recibe el gestor para poder cambiar a otras pantallas.
     public PanelFeedbackBalanceo(GestorVentanas gestor) {
@@ -39,6 +42,10 @@ public class PanelFeedbackBalanceo extends JPanel {
 
         // Agrega la etiqueta del porcentaje y un espacio debajo.
         add(porcentaje);
+        add(Box.createVerticalStrut(10));
+
+        // Agrega la etiqueta de ejercicios correctos debajo del porcentaje.
+        add(ejercicios);
         add(Box.createVerticalStrut(10));
 
         // Agrega la etiqueta del mensaje y un espacio debajo.
@@ -76,11 +83,20 @@ public class PanelFeedbackBalanceo extends JPanel {
             mensaje.setText("¡Buen trabajo! Tu desempeño en balanceo es positivo. ¡Sigue así!");
         }
     }
+    // Muestra cuántos ejercicios acertó el estudiante de los que respondió.
+    // Por ejemplo: "Ejercicios correctos: 4 de 6".
+    public void actualizarEjercicios(int aciertos, int total) {
+        ejercicios.setText("Ejercicios correctos: " + aciertos + " de " + total);
+    }
+
         // Se utiliza cuando el estudiante todavía no tiene respuestas registradas.
     public void mostrarSinResultados() {
 
         // Reemplaza el porcentaje anterior por un aviso de ausencia de resultados.
         porcentaje.setText("Desempeño: sin resultados");
+
+        // Sin respuestas todavía no hay ejercicios correctos que contar.
+        ejercicios.setText("Ejercicios correctos: 0");
 
         // Indica qué debe hacer el estudiante para obtener su desempeño.
         mensaje.setText(
@@ -92,6 +108,9 @@ public class PanelFeedbackBalanceo extends JPanel {
 
         // Quita cualquier porcentaje anterior porque no pudo actualizarse.
         porcentaje.setText("Desempeño: no disponible");
+
+        // Tampoco se pudo contar los ejercicios, así que se indica igual.
+        ejercicios.setText("Ejercicios correctos: no disponible");
 
         // Informa del problema y explica cómo volver a intentarlo.
         mensaje.setText(

@@ -95,10 +95,36 @@ public class ResultadoBalanceodao {
         return consultarDesempenoBalanceo(nombreUsuario);
     }
 
-        // Consulta el porcentaje de balanceo del estudiante indicado.
+    // Consulta el porcentaje de balanceo del estudiante indicado.
     // Double permite devolver null cuando todavía no hay respuestas.
     // SQLException comunica los errores de la consulta a quien llama al método.
     public Double consultarDesempenoBalanceo(String nombreUsuario)
+            throws SQLException {
+
+        // Obtiene cuántos ejercicios acertó y cuántos respondió en total.
+        // La consulta SQL está en consultarConteoBalanceo() para no repetirla.
+        int[] conteo = consultarConteoBalanceo(nombreUsuario);
+
+        // Posición 0: respuestas correctas. Posición 1: respuestas registradas.
+        int aciertos = conteo[0];
+        int total = conteo[1];
+
+        // Comprueba si el estudiante todavía no tiene respuestas.
+        if (total == 0) {
+
+            // Devuelve ausencia de resultados y evita dividir entre cero.
+            return null;
+        }
+
+        // Calcula el porcentaje usando decimales.
+        return aciertos * 100.0 / total;
+    }
+
+    // Cuenta los ejercicios de balanceo que el estudiante respondió y cuántos acertó.
+    // Devuelve un arreglo de dos números: {aciertos, total}.
+    // Si el estudiante no tiene respuestas devuelve {0, 0}.
+    // SQLException comunica los errores de la consulta a quien llama al método.
+    public int[] consultarConteoBalanceo(String nombreUsuario)
             throws SQLException {
 
         // Cuenta las respuestas y suma los aciertos.
@@ -134,23 +160,15 @@ public class ResultadoBalanceodao {
                             "No se pudo leer el resumen de balanceo.");
                 }
 
-                // Obtiene la cantidad de respuestas registradas.
-                int total = fila.getInt("total");
-
-                // Comprueba si el estudiante todavía no tiene respuestas.
-                if (total == 0) {
-
-                    // Devuelve ausencia de resultados y evita dividir entre cero.
-                    return null;
-                }
-
                 // Obtiene la cantidad de respuestas correctas.
                 int aciertos = fila.getInt("aciertos");
 
-                // Calcula el porcentaje usando decimales.
-                return aciertos * 100.0 / total;
+                // Obtiene la cantidad de respuestas registradas.
+                int total = fila.getInt("total");
+
+                // Devuelve las dos cantidades juntas: primero aciertos, luego total.
+                return new int[] {aciertos, total};
             }
         }
     }
 }
- 

@@ -240,6 +240,14 @@ public void mostrarFeedbackBalanceo() {
             // Envía el porcentaje al panel.
             // El panel muestra el porcentaje y el mensaje según el 61%.
             panelFeedbackBalanceo.actualizarDesempeno(desempeno);
+
+            // Consulta cuántos ejercicios acertó y cuántos respondió en total.
+            // conteo[0] son los aciertos y conteo[1] el total de respuestas.
+            int[] conteo =
+                    resultadoBalanceodao.consultarConteoBalanceo(nombreUsuarioActual);
+
+            // Envía las dos cantidades al panel, por ejemplo "4 de 6".
+            panelFeedbackBalanceo.actualizarEjercicios(conteo[0], conteo[1]);
         }
 
     // Recibe los errores que puedan ocurrir durante la consulta.
