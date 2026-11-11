@@ -54,6 +54,9 @@ public class GestorVentanas extends JFrame {
     private final PanelNomenclatura panelNomenclatura;
         // Guarda el panel para actualizarlo antes de mostrarlo.
     private final PanelFeedbackBalanceo panelFeedbackBalanceo;
+    // Guarda el panel de flashcards para actualizarlo antes de mostrarlo.
+    // Antes se creaba directamente al registrarlo y no se podía actualizar después.
+    private final PanelFeedbackFlashcards panelFeedbackFlashcards;
 
     // Crea el objeto que permite consultar los resultados guardados.
     private final ResultadoBalanceodao resultadoBalanceodao = new ResultadoBalanceodao();
@@ -82,6 +85,8 @@ public class GestorVentanas extends JFrame {
         panelNomenclatura = new PanelNomenclatura(this);
         // Crea el panel que mostrará el desempeño de balanceo.
         panelFeedbackBalanceo = new PanelFeedbackBalanceo(this);
+        // Crea el panel que mostrará el desempeño de flashcards (nomenclatura).
+        panelFeedbackFlashcards = new PanelFeedbackFlashcards(this);
 
         // Se registran todas las pantallas en el contenedor
         contenedor.add(new PanelInicio(this), INICIO);
@@ -94,7 +99,8 @@ public class GestorVentanas extends JFrame {
         contenedor.add(panelProfesor, PROFESOR);
         contenedor.add(new PanelBuscarAlumno(this), BUSCARALUMNO);
         contenedor.add(panelFeedback, FEEDBACK);
-        contenedor.add(new PanelFeedbackFlashcards(this), FEEDBACKFLASHCARDS);
+        // Registra el mismo panel de flashcards que recibirá el porcentaje consultado.
+        contenedor.add(panelFeedbackFlashcards, FEEDBACKFLASHCARDS);
         // Registra el mismo panel que recibirá el porcentaje consultado.
         contenedor.add(panelFeedbackBalanceo, FEEDBACKBALANCEO);
         // Carga la imagen de fondo (si no existe, simplemente no se dibuja)
@@ -203,7 +209,58 @@ public class GestorVentanas extends JFrame {
         tarjetas.show(contenedor, FEEDBACK);
     }
 
+    // Consulta el desempeño en nomenclatura y muestra el feedback de flashcards.
+    // Funciona igual que mostrarFeedbackBalanceo(), pero con la tabla resultados_nomenclatura.
     public void mostrarFeedbackFlashcards() {
+
+        // Comprueba que exista un usuario identificado en la sesión.
+        if (nombreUsuarioActual == null
+                || nombreUsuarioActual.trim().isEmpty()) {
+
+            // Abre el inicio de sesión si no hay un usuario identificado.
+            mostrarLogin();
+
+            // Termina el método para no consultar sin identificar al estudiante.
+            return;
+        }
+
+        // Intenta consultar el desempeño en la base de datos.
+        try {
+
+            // Obtiene el porcentaje del usuario que inició sesión.
+            // Recibe null si ese usuario todavía no tiene respuestas.
+            Double desempeno =
+                    resultadoNomenclaturadao.consultarDesempenoNomenclatura(nombreUsuarioActual);
+
+            // Comprueba si todavía no hay resultados registrados.
+            if (desempeno == null) {
+
+                // Muestra el aviso de ausencia de resultados.
+                panelFeedbackFlashcards.mostrarSinResultados();
+
+            } else {
+
+                // Envía el porcentaje al panel.
+                // El panel muestra el porcentaje y el mensaje según el 61%.
+                panelFeedbackFlashcards.actualizarDesempeno(desempeno);
+
+                // Consulta cuántas flashcards acertó y cuántas respondió en total.
+                // conteo[0] son los aciertos y conteo[1] el total de respuestas.
+                int[] conteo =
+                        resultadoNomenclaturadao.consultarConteoNomenclatura(nombreUsuarioActual);
+
+                // Envía las dos cantidades al panel, por ejemplo "4 de 6".
+                panelFeedbackFlashcards.actualizarEjercicios(conteo[0], conteo[1]);
+            }
+
+        // Recibe los errores que puedan ocurrir durante la consulta.
+        } catch (SQLException e) {
+
+            // Muestra el aviso de error sin presentar un porcentaje incorrecto.
+            panelFeedbackFlashcards.mostrarErrorConsulta();
+        }
+
+        // Abre la pantalla después de actualizar su contenido.
         tarjetas.show(contenedor, FEEDBACKFLASHCARDS);
     }
 
